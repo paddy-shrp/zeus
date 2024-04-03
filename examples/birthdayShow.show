@@ -1,0 +1,57 @@
+start:
+    spotify play spotify:track:6AjlKVY7CbQi64zPbMEPZA
+    spotify volume 80
+0:
+    phue * off
+    tuya * off
+2.5:
+    phue * on
+    tuya {0,1} on
+5.5: 
+    phue * off
+    tuya * off
+10:
+    phue * on
+    tuya {0,1} on
+13:
+    phue * off
+    tuya * off
+16.25:
+    phue * flicker 22 0.2
+    tuya {0,1} flicker 22 0.8
+    spotify volume 100
+24:
+    tuya {2} on
+38.5:
+    phue * off
+    tuya * off
+    spotify volume 80
+45:
+    phue * colorswitch 15 8 0.75
+    spotify volume 75
+53:
+    tuya {2} on
+60:
+    tuya {1} on
+    tuya {2} off
+    spotify volume 70
+68:
+    tuya {0} on
+    tuya {1} off
+    spotify volume 75
+75:
+    phue * flicker 14 2
+    spotify volume 100
+76:
+    tuya {0,1} flicker 13 2
+90:
+    phue * foff
+    tuya * off
+95:  
+    phue {5} fon 5
+    phue {5} colorswitch 10 10 1
+105:
+    phue * fon
+    tuya * on
+106:
+    phue {5} fon

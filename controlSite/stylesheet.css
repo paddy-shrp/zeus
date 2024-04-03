@@ -1,0 +1,21 @@
+:root {
+  --background: rgb(247, 246, 233);
+  --mainColor: black;
+  --fontColor: black;
+}
+
+.dark {
+  --background: black;
+  --mainColor: rgb(247, 246, 233);
+  --fontColor: rgb(247, 246, 233);
+}
+
+body {
+  background-position: center center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: var(--background);
+  font-family: "Courier New", Courier, monospace;
+  color: var(--fontColor);
+}

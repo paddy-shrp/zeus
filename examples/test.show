@@ -1,0 +1,8 @@
+start:
+    spotify play spotify:track:4VnDmjYCZkyeqeb0NIKqdA
+    spotify volume 60
+30:
+    spotify volume 20
+32: 
+    spotify volume 100
+

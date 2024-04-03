@@ -1,0 +1,14 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+.venv
+
+.vscode
+
+# Other files that pop up
+private
+credentials
+extensions/private
+testing
