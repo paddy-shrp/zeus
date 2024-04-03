@@ -6,6 +6,8 @@ __pycache__/
 .venv
 
 .vscode
+.cache
+.DS_Store
 
 # Other files that pop up
 private
