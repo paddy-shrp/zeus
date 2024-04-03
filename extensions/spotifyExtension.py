@@ -15,17 +15,17 @@ class SpotifyExtension:
 
     def play(self, songuri, device_id=None, addtoqueue=False):
         if device_id == None:
-            if len(self.getActiveDevices()) < 1:
+            if len(self.get_active_devices()) < 1:
                 return False
         else:
-            if not self.isDeviceActive(device_id):
+            if not self.is_device_active(device_id):
                 return False
 
         try:
             if addtoqueue:
                 self.client.add_to_queue(songuri, device_id)
             else:
-                if (self.isPlaying()):
+                if (self.is_playing()):
                     self.client.pause_playback()
                 self.client.start_playback(device_id, uris=[songuri])
             return True
@@ -34,24 +34,24 @@ class SpotifyExtension:
 
     def pause(self):
         try:
-            if self.isPlaying():
+            if self.is_playing():
                 self.client.pause_playback()
         except:
             pass
 
     def unpause(self):
         try:
-            if not self.isPlaying():
+            if not self.is_playing():
                 self.client.start_playback()
         except:
             pass
 
-    def setVolume(self, volumePercent, device_id=None):
+    def set_volume(self, volumePercent, device_id=None):
         if device_id == None:
-            if len(self.getActiveDevices()) < 1:
+            if len(self.get_active_devices()) < 1:
                 return False
         else:
-            if not self.isDeviceActive(device_id):
+            if not self.is_device_active(device_id):
                 return False
 
         try:
@@ -60,12 +60,12 @@ class SpotifyExtension:
         except:
             return False
 
-    def getActiveDevices(self):
+    def get_active_devices(self):
         return self.client.devices()["devices"]
 
-    def isDeviceActive(self, device_id):
+    def is_device_active(self, device_id):
         try:
-            active_devices = self.getActiveDevices()
+            active_devices = self.get_active_devices()
             if not active_devices == None:
                 return
             for activeDevice in active_devices:
@@ -74,70 +74,64 @@ class SpotifyExtension:
         except:
             return False
 
-    def getAudioAnalysis(self, trackID):
+    def get_audio_analysis(self, trackID):
         try:
             return self.client.audio_analysis(trackID)
         except:
             pass
 
-    def getCurrentPlayback(self):
+    def get_current_playback(self):
         try:
             return self.client.current_playback()
         except:
             pass
 
-    def isPlaying(self):
+    def is_playing(self):
         try:
-            return self.getCurrentPlayback()["is_playing"]
+            return self.get_current_playback()["is_playing"]
         except:
             pass
 
-    def getCurrentDeviceID(self):
+    def get_current_device_id(self):
         try:
-            return self.getCurrentPlayback()["device"]["id"]
+            return self.get_current_playback()["device"]["id"]
         except:
             pass
 
-    def getProgressInSeconds(self):
+    def get_progress(self):
         try:
-            return self.getCurrentPlayback()["progress_ms"] / 1000
+            return self.get_current_playback()["progress_ms"] / 1000
         except:
             pass
 
-    def getCurrentPlaybackItem(self):
+    def get_current_playback_item(self):
         try:
-            return self.getCurrentPlayback()["item"]
+            return self.get_current_playback()["item"]
         except:
             pass
 
-    def getCurrentPlaybackName(self):
+    def get_current_playback_name(self):
         try:
-            return self.getCurrentPlayback()["item"]["name"]
+            return self.get_current_playback()["item"]["name"]
         except:
             pass
 
-    def getCurrentPlaybackLink(self):
+    def get_current_playback_link(self):
         try:
-            return self.getCurrentPlayback()["item"]["href"]
+            return self.get_current_playback()["item"]["href"]
         except:
             pass
 
-    def getCurrentPlaybackURI(self):
+    def get_current_playback_uri(self):
         try:
-            return self.getCurrentPlayback()["item"]["uri"]
-        except:
-            pass
-
-    def getCurrentPlaybackAudioAnalysis(self):
-        try:
-            return self.getAudioAnalysis(self.getCurrentPlaybackURI())
+            return self.get_current_playback()["item"]["uri"]
         except:
             pass
 
     def getData(self):
         data = {}
         songIdName = EXTENSION_NAME + "_" + "songname"
-        data[songIdName] = self.getCurrentPlaybackName()
+        data[songIdName] = self.get_current_playback_name()
         return data
 
 #uri = "spotify:track:6AjlKVY7CbQi64zPbMEPZA"

@@ -23,10 +23,10 @@ tuyaLights = {0, 1, 2}
 
 
 def initLights():
-    phueExt.setToStandardColor(phueLights, 0)
+    phueExt.set_to_base_color(phueLights, 0)
     phueExt.on(phueLights)
-    phueExt.tempOff(phueLights)
-    tuyaExt.setLightState(tuyaLights, on=False)
+    phueExt.temp_off(phueLights)
+    tuyaExt.set_light_state(tuyaLights, on=False)
 
 
 def readFile(path):
@@ -66,12 +66,12 @@ def executeCommand(cmd, args):
                     transitiontime = 0
                     if argsCount > 2:
                         transitiontime = int(args[2])
-                    phueExt.tempOn(lights, transitiontime)
+                    phueExt.temp_on(lights, transitiontime)
                 case "off":
                     transitiontime = 0
                     if argsCount > 2:
                         transitiontime = int(args[2])
-                    phueExt.tempOff(lights, transitiontime)
+                    phueExt.temp_off(lights, transitiontime)
                 case "fon":
                     transitiontime = 0
                     if argsCount > 2:
@@ -89,7 +89,7 @@ def executeCommand(cmd, args):
                     frequency = 1
                     if argsCount > 3:
                         frequency = float(args[3])
-                    phueExt.startFlicker(lights, duration, frequency)
+                    phueExt.start_flicker(lights, duration, frequency)
                 case "colorswitch":
                     duration = 3
                     if argsCount > 2:
@@ -100,7 +100,7 @@ def executeCommand(cmd, args):
                     waitTime = 0.5
                     if argsCount > 4:
                         waitTime = float(args[4])
-                    phueExt.startColorSwitch(
+                    phueExt.start_color_switch(
                         lights, duration, transitiontime, waitTime)
         case "tuya":
             lights = {}
@@ -120,7 +120,7 @@ def executeCommand(cmd, args):
                     frequency = 1
                     if argsCount > 3:
                         frequency = float(args[3])
-                    tuyaExt.startFlicker(lights, duration, frequency)
+                    tuyaExt.start_flicker(lights, duration, frequency)
         case "spotify":
             match args[0]:
                 case "play":
@@ -134,7 +134,7 @@ def executeCommand(cmd, args):
                     if argsCount < 2:
                         return
                     volume = int(args[1])
-                    spotifyExt.setVolume(volume)
+                    spotifyExt.set_volume(volume)
             return
 
 

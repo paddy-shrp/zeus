@@ -9,13 +9,13 @@ class InfluxDB:
         self.queryAPI = self.client.query_api()
         pass
 
-    def addPoint(self, bucket, id, value):
+    def add_point(self, bucket, id, value):
         self.writeAPI.write(bucket, record=(
             Point(id)
             .field("status", value)
         ))
 
-    def getLastValue(self, bucket, measurement):
+    def get_last_value(self, bucket, measurement):
         query = """from(bucket: "{b}")
         |> range(start: -1h)
         |> filter(fn: (r) => r._measurement == "{m}")"""

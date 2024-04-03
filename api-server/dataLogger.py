@@ -43,18 +43,18 @@ class SignalHandler:
         return not self.shutdown_requested
 
 
-def getCurrentSnapshot():
+def get_current_snapshot():
     currentDataSnapshot = {}
 
     # Phue
     try:
-        currentDataSnapshot.update(phueExt.getData())
+        currentDataSnapshot.update(phueExt.get_data())
     except:
         print("Error with Phue Extension")
 
     # Tuya
     try:
-        currentDataSnapshot.update(tuyaExt.getData())
+        currentDataSnapshot.update(tuyaExt.get_data())
     except:
         print("Error with Tuya Extension")
     return currentDataSnapshot
@@ -63,10 +63,10 @@ def getCurrentSnapshot():
 signalHandler = SignalHandler()
 
 while signalHandler.can_run():
-    currentDataSnapshot = getCurrentSnapshot()
+    currentDataSnapshot = get_current_snapshot()
 
     for key in currentDataSnapshot:
         currentValue = currentDataSnapshot[key]
-        if not (currentValue == db.getLastValue(mainBucket, key)):
-            db.addPoint(mainBucket, key, currentValue)
+        if not (currentValue == db.get_last_value(mainBucket, key)):
+            db.add_point(mainBucket, key, currentValue)
     sleep(1)

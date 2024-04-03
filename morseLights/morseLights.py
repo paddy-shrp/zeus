@@ -28,21 +28,21 @@ phueLights = {9, 10}
 tuyaLights = {1}
 
 
-def initLights():
+def init_lights():
     phueExt.setToStandardColor(phueLights, 0)
     phueExt.on(phueLights)
     phueExt.tempOff(phueLights)
     tuyaExt.off(tuyaLights)
 
 
-def calculateDuration(msg: str):
+def calculate_duration(msg: str):
     pauseDuration = msg.count(" ") * LONG_PAUSE_DURATION
     shortDuration = msg.count(".") * (SHORT_DURATION + SHORT_PAUSE_DURATION)
     longDuration = msg.count("-") * (LONG_DURATION + SHORT_PAUSE_DURATION)
     return pauseDuration + shortDuration + longDuration
 
 
-def printProgressBar(iteration, total, prefix='', suffix='', decimals=0, length=50, fill='█', printEnd="\r"):
+def print_progress_bar(iteration, total, prefix='', suffix='', decimals=0, length=50, fill='█', printEnd="\r"):
 
     percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total)))
     filledLength = int(length * iteration / total)
@@ -52,13 +52,13 @@ def printProgressBar(iteration, total, prefix='', suffix='', decimals=0, length=
         print()
 
 
-def showMessage(msg: str, cycles=1):
-    morseString = morseCode.parseStringToMorseCode(msg)
-    totalDuration = calculateDuration(morseString) * cycles
+def show_morse(msg: str, cycles=1):
+    morseString = morseCode.parse_string_to_morse(msg)
+    totalDuration = calculate_duration(morseString) * cycles
     print(f"Total Duration (with {cycles} Cycles): {totalDuration}s")
     passedDuration = 0
     for _ in range(cycles):
-        printProgressBar(passedDuration, totalDuration)
+        print_progress_bar(passedDuration, totalDuration)
         for char in morseString:
             if (char == "  "):
                 sleep(LONG_DURATION + LONG_PAUSE_DURATION)
@@ -74,7 +74,7 @@ def showMessage(msg: str, cycles=1):
                 show(LONG_DURATION)
                 sleep(SHORT_PAUSE_DURATION)
                 passedDuration += (LONG_DURATION + SHORT_PAUSE_DURATION)
-            printProgressBar(passedDuration, totalDuration)
+            print_progress_bar(passedDuration, totalDuration)
         sleep(CYCLE_PAUSE_DURATION)
 
 def lights_on():
@@ -95,5 +95,5 @@ while True:
     msg = input()
     print("Number of cycles:")
     cycles = int(input())
-    showMessage(msg, cycles)
+    show_morse(msg, cycles)
     phueExt.off(phueLights)

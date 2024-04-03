@@ -27,7 +27,7 @@ class TuyaExtension:
             shutil.move("./snapshot.json", destPath)
         return json.load(open(destPath))["devices"]
 
-    def setLightState(self, ids, on: bool):
+    def set_light_state(self, ids, on: bool):
         if isinstance(ids, int):
             Thread(target=self.deviceList[id].set_value, args=(1, on,)).start()
         else:
@@ -36,12 +36,12 @@ class TuyaExtension:
                     1, on,)).start()
 
     def on(self, ids):
-        self.setLightState(ids, True)
+        self.set_light_state(ids, True)
 
     def off(self, ids):
-        self.setLightState(ids, False)
+        self.set_light_state(ids, False)
 
-    def startFlicker(self, ids, duration=3, frequency=1):
+    def start_flicker(self, ids, duration=3, frequency=1):
         Thread(target=self.__flicker, args=(
             ids, duration, frequency)).start()
 
@@ -55,7 +55,7 @@ class TuyaExtension:
             sleep(fTime)
         self.off(ids)
 
-    def getData(self):
+    def get_data(self):
         data = {}
         for device in self.deviceList:
             try:
