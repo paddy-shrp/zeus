@@ -1,6 +1,5 @@
 from threading import Thread
 import time
-import json
 import ast
 from time import sleep
 
@@ -10,12 +9,9 @@ from extensions.spotifyExtension import SpotifyExtension
 from extensions.tuyaExtension import TuyaExtension
 
 # Init Extensions
-phueC = json.load(open("./credentials/phue-credentials.json"))
-phueExt = PHueExtension(phueC["IP"])
+phueExt = PHueExtension()
 tuyaExt = TuyaExtension()
-spC = json.load(open("./credentials/spotify-credentials.json"))
-spotifyExt = SpotifyExtension(
-    spC["clientID"], spC["clientSecret"], spC["redirectUri"], spC["scopes"])
+spotifyExt = SpotifyExtension()
 
 
 phueLights = {3, 4, 5, 6, 8}

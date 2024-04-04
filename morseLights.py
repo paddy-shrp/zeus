@@ -1,6 +1,6 @@
 from time import sleep
 from threading import Thread
-import morseCode
+import morseLights.morseCode as morse
 import json
 
 # Intervals
@@ -53,7 +53,7 @@ def print_progress_bar(iteration, total, prefix='', suffix='', decimals=0, lengt
 
 
 def show_morse(msg: str, cycles=1):
-    morseString = morseCode.parse_string_to_morse(msg)
+    morseString = morse.parse_string_to_morse(msg)
     totalDuration = calculate_duration(morseString) * cycles
     print(f"Total Duration (with {cycles} Cycles): {totalDuration}s")
     passedDuration = 0

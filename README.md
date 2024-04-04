@@ -13,9 +13,10 @@ This project is designed to make smart home unified and offer more fluid control
 It will advance towards a maintainable API where all the displays in a smart home can refer to. It should also support data logging of sensor data from every smart home device, thus making it usable for a data analysis or smart home automation predictions.
 
 Currently configured for:
+- Spotify API
+- OpenWeatherMap API
 - Philips Hue Devices
 - Tuya Devices
-- Spotify API
 
 ## Setup
 

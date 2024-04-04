@@ -7,19 +7,20 @@ import json
 
 # This cannot be changed later on, else the data will be useless
 EXTENSION_NAME = "phue"
-PHUE_C_PATH = "./credentials/phue-credentials.json"
+CREDENTIALS_PATH = f"./credentials/{EXTENSION_NAME}-credentials.json"
 
 # Hue: 7227
 # Sat: 223
 # ct: 494
 
 class PHueExtension:
-    def __init__(self, host):
-        if not exists(PHUE_C_PATH):
-            phueC = {"IP": host}
-            with open(PHUE_C_PATH, "w") as file:
-                json.dump(phueC, file, indent=4)
-        self.bridge = Bridge(host)
+    def __init__(self, host=""):
+        if not exists(CREDENTIALS_PATH):
+            credentials = {"IP": host}
+            with open(CREDENTIALS_PATH, "w") as file:
+                json.dump(credentials, file, indent=4)
+        credentials = json.load(open(CREDENTIALS_PATH))
+        self.bridge = Bridge(credentials["IP"])
 
     def set_light_state(self, ids, on: bool = None, bri: int = None, hue: int = None, sat: int = None, transitiontime: int = None):
         cmds = {}
