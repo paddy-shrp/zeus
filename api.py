@@ -1,9 +1,13 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 import inspect
+
+import settings
 
 # Extensions
 from extensions.weatherExtension import WeatherExtension
 from extensions.spotifyExtension import SpotifyExtension
+
 
 weatherExt = WeatherExtension()
 spotifyExt = SpotifyExtension()
@@ -11,6 +15,14 @@ spotifyExt = SpotifyExtension()
 
 app = FastAPI()
 
+# Add CORS middleware to the FastAPI app
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=settings.get_settings()["allowed_origins"],
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all methods
+    allow_headers=["*"],  # Allow all headers
+)
 
 @app.get("/")
 def read_root():
@@ -35,7 +47,9 @@ def generate_routes(ext_name, module):
             path = f"/{ext_name}/{name}/"
 
             tag = ext_name
-            if name == "get_data": tag = "data"
+            if name == "get_data":
+                 path = f"/data/{ext_name}" 
+                 tag = "data"
             app.add_api_route(path, method, tags=[tag], methods=[method.request_type])
 
 

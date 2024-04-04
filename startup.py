@@ -1,6 +1,8 @@
 import os
 from os.path import exists
 
+import settings
+
 # Extension Imports
 from extensions.pHueLightsExtension import PHueExtension
 from extensions.spotifyExtension import SpotifyExtension
@@ -10,6 +12,10 @@ from extensions.weatherExtension import WeatherExtension
 if not exists("./credentials"):
     path = "./credentials"
     os.mkdir(path)
+
+# Settings
+settings.get_settings()
+
 
 # Setup weather Extension
 WeatherExtension()
