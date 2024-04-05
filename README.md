@@ -3,9 +3,11 @@
 ## Project Status: On Hold
 
 Development of ZEUS is currently paused due to recent developments in Matter and the Thread-Protocol
-It will be continued once the Smart-Home Market finds its specifications. 
+It will be continued once the Smart-Home Market finds its specifications.
 
-However, due to more experience in coding and project management it is __very likely__ that this whole project will be rewritten as __it is not__ presentable at its current state because the Codebase is from 2022.
+## Setup
+
+The "startup.py" file triggers the setups of the current extensions.
 
 ## What ZEUS is about
 
@@ -18,7 +20,5 @@ Currently configured for:
 - Philips Hue Devices
 - Tuya Devices
 
-## Setup
-
-The "startup.py" file triggers the setups of the current extensions.
-
+## Structure
+![ZEUS](https://github.com/paddy-shrp/zeus/assets/50612943/8288fab9-cb47-452b-ab49-96b4fbe49235)
