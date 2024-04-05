@@ -5,6 +5,10 @@
 Development of ZEUS is currently paused due to recent developments in Matter and the Thread-Protocol
 It will be continued once the Smart-Home Market finds its specifications.
 
+## Setup
+
+The "startup.py" file triggers the setups of the current extensions.
+
 ## What ZEUS is about
 
 This project is designed to make smart home unified and offer more fluid control over it from a Python perspective.
@@ -17,10 +21,4 @@ Currently configured for:
 - Tuya Devices
 
 ## Structure
-
-<img width="1493" alt="ZEUS" src="https://github.com/paddy-shrp/zeus/assets/50612943/b951b45f-ce43-4570-96d7-6b7c7f8fae36">
-
-## Setup
-
-The "startup.py" file triggers the setups of the current extensions.
-
+![ZEUS](https://github.com/paddy-shrp/zeus/assets/50612943/8288fab9-cb47-452b-ab49-96b4fbe49235)
