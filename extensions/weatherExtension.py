@@ -1,5 +1,5 @@
 from os.path import exists
-from .decorators import *
+from utils.decorators import *
 import json
 import requests
 import time

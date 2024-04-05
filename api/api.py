@@ -2,13 +2,14 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import inspect
 
-import settings
+import settings as settings
 
 # Extensions
+from managers.showmanager.showmanager import ShowManager
 from extensions.weatherExtension import WeatherExtension
 from extensions.spotifyExtension import SpotifyExtension
 
-
+showManager = ShowManager()
 weatherExt = WeatherExtension()
 spotifyExt = SpotifyExtension()
 
@@ -28,17 +29,6 @@ app.add_middleware(
 def read_root():
     return 200
 
-@app.get("/{name}")
-def get_data(name: str):
-    try:
-        if name == "weather":
-            return weatherExt.get_data()
-        elif name == "spotify":
-            return spotifyExt.get_data()
-    except:
-            return 500
-    return 404
-
 def generate_routes(ext_name, module):
      for name, method in inspect.getmembers(module, inspect.ismethod):
             if name == "__init__": continue
@@ -53,9 +43,9 @@ def generate_routes(ext_name, module):
             app.add_api_route(path, method, tags=[tag], methods=[method.request_type])
 
 
-
 generate_routes("weather", weatherExt)
 generate_routes("spotify", spotifyExt)
+generate_routes("showmanager", showManager)
 
 if __name__ == "__main__":
     import uvicorn

@@ -1,6 +1,6 @@
 import json
 
-morseFile = open("./morseLights/morse.json")
+morseFile = open("./api/extensions/morse/morse.json")
 morseTable = json.load(morseFile)
 
 morseFile.close()

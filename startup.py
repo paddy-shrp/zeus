@@ -1,7 +1,7 @@
 import os
 from os.path import exists
 
-import settings
+import settings as settings
 
 # Extension Imports
 from extensions.pHueLightsExtension import PHueExtension

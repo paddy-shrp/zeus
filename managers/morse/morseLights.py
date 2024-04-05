@@ -1,7 +1,6 @@
 from time import sleep
 from threading import Thread
-import morseLights.morseCode as morse
-import json
+import morseCode as morse
 
 # Intervals
 SHORT_DURATION = 0.5
@@ -16,12 +15,9 @@ from extensions.spotifyExtension import SpotifyExtension
 from extensions.tuyaExtension import TuyaExtension
 
 # Init Extensions
-phueC = json.load(open("./credentials/phue-credentials.json"))
-phueExt = PHueExtension(phueC["IP"])
+phueExt = PHueExtension()
 tuyaExt = TuyaExtension()
-spC = json.load(open("./credentials/spotify-credentials.json"))
-spotifyExt = SpotifyExtension(
-    spC["clientID"], spC["clientSecret"], spC["redirectUri"], spC["scopes"])
+spotifyExt = SpotifyExtension()
 
 
 phueLights = {9, 10}
@@ -29,9 +25,9 @@ tuyaLights = {1}
 
 
 def init_lights():
-    phueExt.setToStandardColor(phueLights, 0)
+    phueExt.set_to_base_color(phueLights, 0)
     phueExt.on(phueLights)
-    phueExt.tempOff(phueLights)
+    phueExt.temp_off(phueLights)
     tuyaExt.off(tuyaLights)
 
 
@@ -78,11 +74,11 @@ def show_morse(msg: str, cycles=1):
         sleep(CYCLE_PAUSE_DURATION)
 
 def lights_on():
-    Thread(target=phueExt.tempOn, args=(phueLights)).start()
+    Thread(target=phueExt.temp_on, args=(phueLights)).start()
     Thread(target=tuyaExt.on, args=(tuyaLights)).start()
 
 def lights_off():
-    Thread(target=phueExt.tempOff, args=(phueLights)).start()
+    Thread(target=phueExt.temp_off, args=(phueLights)).start()
     Thread(target=tuyaExt.off, args=(tuyaLights)).start()
 
 def show(duration:float):

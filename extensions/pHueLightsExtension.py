@@ -3,6 +3,7 @@ from threading import Thread
 from time import sleep, time
 from phue import Bridge
 from os.path import exists
+from utils.decorators import *
 import json
 
 # This cannot be changed later on, else the data will be useless
@@ -38,18 +39,23 @@ class PHueExtension:
                 cmds["bri"] = 255
         self.bridge.set_light(ids, cmds)
 
+    @include_put
     def on(self, ids, transitiontime=0):
         self.set_light_state(ids, on=True, transitiontime=transitiontime)
 
+    @include_put
     def off(self, ids, transitiontime=0):
         self.set_light_state(ids, on=False, transitiontime=transitiontime)
 
+    @include_put
     def temp_on(self, ids, transitiontime=0):
         self.set_light_state(ids, bri=255, transitiontime=transitiontime)
 
+    @include_put
     def temp_off(self, ids, transitiontime=0):
         self.set_light_state(ids, bri=0, transitiontime=transitiontime)
 
+    @include_put
     def set_to_base_color(self, ids, transitiontime=4):
         self.bridge.set_light(
             ids, self.get_base_color_command(255, transitiontime))
@@ -98,9 +104,6 @@ class PHueExtension:
                 sleep(stepTime)
         self.temp_off(ids)
 
-    def get_lights(self):
-        return self.bridge.lights
-
     def get_base_color_command(self, bri=255, transitiontime=4):
         cmds = {}
         if bri != None:
@@ -111,6 +114,11 @@ class PHueExtension:
         cmds["transitiontime"] = transitiontime
         return cmds
 
+    @include_get
+    def get_lights(self):
+        return self.bridge.lights
+
+    @include_get
     def get_data(self):
         data = {}
         for light in self.bridge.lights:

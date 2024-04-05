@@ -1,7 +1,7 @@
 import spotipy
 from spotipy import SpotifyOAuth
 from os.path import exists
-from .decorators import *
+from utils.decorators import *
 import json
 
 # This cannot be changed later on, else the data will be useless
