@@ -3,9 +3,7 @@
 ## Project Status: On Hold
 
 Development of ZEUS is currently paused due to recent developments in Matter and the Thread-Protocol
-It will be continued once the Smart-Home Market finds its specifications. 
-
-However, due to more experience in coding and project management it is __very likely__ that this whole project will be rewritten as __it is not__ presentable at its current state because the Codebase is from 2022.
+It will be continued once the Smart-Home Market finds its specifications.
 
 ## What ZEUS is about
 
@@ -17,6 +15,10 @@ Currently configured for:
 - OpenWeatherMap API
 - Philips Hue Devices
 - Tuya Devices
+
+## Structure
+
+<img width="1493" alt="ZEUS" src="https://github.com/paddy-shrp/zeus/assets/50612943/b951b45f-ce43-4570-96d7-6b7c7f8fae36">
 
 ## Setup
 
