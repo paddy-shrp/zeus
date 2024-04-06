@@ -10,7 +10,12 @@ def get_settings():
                 "http://localhost",
                 "http://127.0.0.1",
                 "http://192.168.178.1"
-            ]
+            ],
+            "include_extensions": {
+                "spotify": "Spotify",
+                "weather": "Weather"
+            },
+            "include_managers": {}
         }
         
         with open(SETTINGS_PATH, "w") as file:

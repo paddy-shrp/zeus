@@ -4,7 +4,7 @@ from time import sleep, time
 from phue import Bridge
 from os.path import exists
 from utils.decorators import *
-from .extension import Extension
+from utils.extension import Extension
 import json
 
 
@@ -20,9 +20,6 @@ class PHue(Extension):
                 json.dump(credentials, file, indent=4)
         credentials = json.load(open(self.get_credentials_path()))
         self.bridge = Bridge(credentials["IP"])
-
-    def get_extension_name():
-        return "p_hue"
 
     def set_light_state(self, ids, on: bool = None, bri: int = None, hue: int = None, sat: int = None, transitiontime: int = None):
         cmds = {}

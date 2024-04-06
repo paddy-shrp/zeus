@@ -1,6 +1,6 @@
 from os.path import exists
 from utils.decorators import *
-from .extension import Extension
+from utils.extension import Extension
 import shutil
 from threading import Thread
 from time import time, sleep

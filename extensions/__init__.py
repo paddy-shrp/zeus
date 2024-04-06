@@ -1,16 +1,18 @@
 from utils.getters import *
-from .weather import Weather
-from .spotify import Spotify
-from .p_hue import PHue
-from .tuya import Tuya
+import settings
+from importlib import import_module
 
 def get_extensions(filter=[]):
-    extensions = {}
+    
+    base_path = "extensions."
+    include_extensions = settings.get_settings()["include_extensions"]
 
-    extensions[Weather.get_extension_name()] = Weather
-    extensions[Spotify.get_extension_name()] = Spotify
-    extensions[PHue.get_extension_name()] = PHue
-    extensions[Tuya.get_extension_name()] = Tuya
+    extensions = {}
+    for module_name, class_name in include_extensions.items():
+        module_path = base_path + module_name
+        module = import_module(module_path)
+        class_ = getattr(module, class_name)
+        extensions[class_.get_extension_name()] = class_
  
     return get_objects_filtered(extensions, filter)
 

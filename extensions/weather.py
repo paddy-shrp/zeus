@@ -1,6 +1,6 @@
 from os.path import exists
 from utils.decorators import *
-from .extension import Extension
+from utils.extension import Extension
 import json
 import requests
 import time

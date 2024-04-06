@@ -5,7 +5,6 @@ import settings as settings
 import extensions
 import managers
 
-
 exts = extensions.get_extensions_initalized()
 mgs = managers.get_managers_initalized()
 

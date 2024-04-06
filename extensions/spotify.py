@@ -2,7 +2,7 @@ import spotipy
 from spotipy import SpotifyOAuth
 from os.path import exists
 from utils.decorators import *
-from .extension import Extension
+from utils.extension import Extension
 import json
 
 class Spotify(Extension):

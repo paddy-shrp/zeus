@@ -4,21 +4,21 @@ import ast
 from time import sleep
 from os.path import exists
 
+from utils.manager import Manager
 from utils.decorators import *
-import extensions
-
-MANAGER_NAME = "show"
+from extensions.spotify import Spotify
+from extensions.phue import PHue
+from extensions.tuya import Tuya
 
 # Make dynamic
 PHUE_LIGHT_IDS = {3, 4, 5, 6, 8}
 TUYA_LIGHT_IDS = {0, 1, 2}
 
-class Show():
+class Show(Manager):
     def __init__(self):
-        exts = extensions.get_extensions_initalized(["spotify", "p_hue", "tuya"])
-        self.spotifyExt = exts["spotify"]
-        self.phueExt = exts["p_hue"]
-        self.tuyaExt = exts["tuya"]
+        self.spotifyExt = Spotify()
+        self.phueExt = PHue()
+        self.tuyaExt = Tuya()
         self.phue_light_ids = PHUE_LIGHT_IDS
         self.tuya_light_ids = TUYA_LIGHT_IDS
 
@@ -173,6 +173,3 @@ class Show():
     @include_get
     def get_data(self):
         return {}
-    
-    def get_manager_name():
-        return MANAGER_NAME
