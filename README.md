@@ -22,19 +22,25 @@ Currently configured for:
 
 ## Structure
 
-![ZEUS](https://github.com/paddy-shrp/zeus/assets/50612943/8288fab9-cb47-452b-ab49-96b4fbe49235)
+![ZEUS](https://github.com/paddy-shrp/zeus/assets/50612943/c490be65-2d69-47c1-9be4-0a013f3e45c0)
 
 ### File Structure
-api/
-extensions/
-├─ example_extension_0/
-├─ example_extension_1/
-├─ example_extension_2/
-managers/
-├─ example_manager_0/
-├─ example_manager_1/
-├─ example_manager_2/
-utils/
-tests/
-data_logger/
-ai/
+
+```
+zeus
+├─ __init__.py
+├─ api
+├─ extensions
+│  ├─ __init__.py
+│  ├─ example_extension_0.py
+│  └─ example_extension_1
+│     └─ example_extension_1.py
+├─ managers
+│  ├─ __init__.py
+│  ├─ example_manager_0.py
+│  └─ example_manager_1
+│     └─ example_manager_1.py
+├─ utils
+│  └─ __init__.py
+└─ data_logger
+```
