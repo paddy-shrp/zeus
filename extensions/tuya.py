@@ -1,15 +1,13 @@
 from os.path import exists
+from utils.decorators import *
+from .extension import Extension
 import shutil
 from threading import Thread
 from time import time, sleep
 import tinytuya as tuya
 import json
 
-# This cannot be changed later on, else the data will be useless
-EXTENSION_NAME = "tuya"
-
-
-class TuyaExtension:
+class Tuya(Extension):
     def __init__(self):
         devices = self.scanDevices()
         self.deviceList = []
@@ -55,12 +53,13 @@ class TuyaExtension:
             sleep(fTime)
         self.off(ids)
 
+    @include_get
     def get_data(self):
         data = {}
         for device in self.deviceList:
             try:
                 d_status = device.status()
-                dataIdName = EXTENSION_NAME + "_" + d_status["devId"]
+                dataIdName = self.get_extension_name() + "_" + d_status["devId"]
                 data[dataIdName] = 1 if d_status["dps"]["1"] else 0
             except:
                 pass

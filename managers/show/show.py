@@ -4,24 +4,23 @@ import ast
 from time import sleep
 from os.path import exists
 
-# Extension Imports
 from utils.decorators import *
-from extensions.pHueLightsExtension import PHueExtension
-from extensions.spotifyExtension import SpotifyExtension
-from extensions.tuyaExtension import TuyaExtension
+import extensions
+
+MANAGER_NAME = "show"
 
 # Make dynamic
 PHUE_LIGHT_IDS = {3, 4, 5, 6, 8}
 TUYA_LIGHT_IDS = {0, 1, 2}
 
-class ShowManager():
+class Show():
     def __init__(self):
-        self.phueExt = PHueExtension()
-        self.tuyaExt = TuyaExtension()
-        self.spotifyExt = SpotifyExtension()
+        exts = extensions.get_extensions_initalized(["spotify", "p_hue", "tuya"])
+        self.spotifyExt = exts["spotify"]
+        self.phueExt = exts["p_hue"]
+        self.tuyaExt = exts["tuya"]
         self.phue_light_ids = PHUE_LIGHT_IDS
         self.tuya_light_ids = TUYA_LIGHT_IDS
-        pass
 
     def init_lights(self):
         self.phueExt.set_to_base_color(self.phue_light_ids, 0)
@@ -170,3 +169,10 @@ class ShowManager():
     def play_file_request(self, path):
         if not exists(path): return 400
         Thread(target=self.play_file, args=(path)).start()
+
+    @include_get
+    def get_data(self):
+        return {}
+    
+    def get_manager_name():
+        return MANAGER_NAME

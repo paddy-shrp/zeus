@@ -1,2 +1,2 @@
-sudo systemctl restart data-logger
-sudo systemctl status data-logger
+sudo systemctl restart data_logger
+sudo systemctl status data_logger

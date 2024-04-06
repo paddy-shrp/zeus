@@ -1,24 +1,21 @@
 from os.path import exists
 from utils.decorators import *
+from .extension import Extension
 import json
 import requests
 import time
 
-# This cannot be changed later on, else the data will be useless
-EXTENSION_NAME = "weather"
-CREDENTIALS_PATH = f"./credentials/{EXTENSION_NAME}-credentials.json"
-
 FORECAST_URL = "https://api.openweathermap.org/data/2.5/forecast"
 CURRENT_URL = "https://api.openweathermap.org/data/2.5/weather"
 
-class WeatherExtension:
+class Weather(Extension):
 
     def __init__(self, apiKey="", lat="", lon=""):
-        if not exists(CREDENTIALS_PATH):
+        if not exists(self.get_credentials_path()):
             credentials = {"apiKey": apiKey, "lat": lat, "lon": lon}
-            with open(CREDENTIALS_PATH, "w") as file:
+            with open(self.get_credentials_path(), "w") as file:
                 json.dump(credentials, file, indent=4)
-        credentials = json.load(open(CREDENTIALS_PATH))
+        credentials = json.load(open(self.get_credentials_path()))
         self.apiKey = credentials["apiKey"]
         self.lat = credentials["lat"]
         self.lon = credentials["lon"]
@@ -81,4 +78,4 @@ class WeatherExtension:
 
     @include_get
     def get_data(self):
-        return self.get_current()
+        return {}

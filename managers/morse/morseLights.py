@@ -10,14 +10,14 @@ LONG_PAUSE_DURATION = 1.5
 CYCLE_PAUSE_DURATION = 10
 
 # Extension Imports
-from extensions.pHueLightsExtension import PHueExtension
-from extensions.spotifyExtension import SpotifyExtension
-from extensions.tuyaExtension import TuyaExtension
+from extensions.p_hue import PHue
+from extensions.spotify import Spotify
+from extensions.tuya import Tuya
 
 # Init Extensions
-phueExt = PHueExtension()
-tuyaExt = TuyaExtension()
-spotifyExt = SpotifyExtension()
+phueExt = PHue()
+tuyaExt = Tuya()
+spotifyExt = Spotify()
 
 
 phueLights = {9, 10}

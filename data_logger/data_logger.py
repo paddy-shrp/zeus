@@ -5,11 +5,6 @@ import signal
 # Database Import
 from influxdbData import InfluxDB
 
-# Extension Imports
-from extensions.pHueLightsExtension import PHueExtension
-from extensions.spotifyExtension import SpotifyExtension
-from extensions.tuyaExtension import TuyaExtension
-
 # Init DB
 influxC = json.load(open("./credentials/influxdb-credentials.json"))
 token = influxC["token"]
@@ -17,15 +12,6 @@ org = influxC["organization"]
 url = "http://192.168.178.132:8086"
 db = InfluxDB(token, url, org)
 mainBucket = "homeData"
-
-# Init Extensions
-phueC = json.load(open("./credentials/phue-credentials.json"))
-phueExt = PHueExtension(phueC["IP"])
-poolC = json.load(open("./credentials/pool-credentials.json"))
-tuyaExt = TuyaExtension()
-spC = json.load(open("./spotify-credentials.json"))
-spotifyExt = SpotifyExtension(
-    spC["clientID"], spC["clientSecret"], spC["redirectUri"], spC["scopes"])
 
 
 class SignalHandler:
@@ -45,20 +31,7 @@ class SignalHandler:
 
 def get_current_snapshot():
     currentDataSnapshot = {}
-
-    # Phue
-    try:
-        currentDataSnapshot.update(phueExt.get_data())
-    except:
-        print("Error with Phue Extension")
-
-    # Tuya
-    try:
-        currentDataSnapshot.update(tuyaExt.get_data())
-    except:
-        print("Error with Tuya Extension")
     return currentDataSnapshot
-
 
 signalHandler = SignalHandler()
 

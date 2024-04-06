@@ -4,24 +4,25 @@ from time import sleep, time
 from phue import Bridge
 from os.path import exists
 from utils.decorators import *
+from .extension import Extension
 import json
 
-# This cannot be changed later on, else the data will be useless
-EXTENSION_NAME = "phue"
-CREDENTIALS_PATH = f"./credentials/{EXTENSION_NAME}-credentials.json"
 
 # Hue: 7227
 # Sat: 223
 # ct: 494
 
-class PHueExtension:
+class PHue(Extension):
     def __init__(self, host=""):
-        if not exists(CREDENTIALS_PATH):
+        if not exists(self.get_credentials_path()):
             credentials = {"IP": host}
-            with open(CREDENTIALS_PATH, "w") as file:
+            with open(self.get_credentials_path(), "w") as file:
                 json.dump(credentials, file, indent=4)
-        credentials = json.load(open(CREDENTIALS_PATH))
+        credentials = json.load(open(self.get_credentials_path()))
         self.bridge = Bridge(credentials["IP"])
+
+    def get_extension_name():
+        return "p_hue"
 
     def set_light_state(self, ids, on: bool = None, bri: int = None, hue: int = None, sat: int = None, transitiontime: int = None):
         cmds = {}
@@ -122,6 +123,6 @@ class PHueExtension:
     def get_data(self):
         data = {}
         for light in self.bridge.lights:
-            dataIdName = EXTENSION_NAME + "_" + str(light.light_id)
+            dataIdName = self.get_extension_name() + "_" + str(light.light_id)
             data[dataIdName] = 1 if light.on else 0
         return data

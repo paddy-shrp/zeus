@@ -2,25 +2,22 @@ import spotipy
 from spotipy import SpotifyOAuth
 from os.path import exists
 from utils.decorators import *
+from .extension import Extension
 import json
 
-# This cannot be changed later on, else the data will be useless
-EXTENSION_NAME = "spotify"
-CREDENTIALS_PATH = f"./credentials/{EXTENSION_NAME}-credentials.json"
-
-class SpotifyExtension:
+class Spotify(Extension):
 
     def __init__(self, client_id="", client_secret=""):
-        if not exists(CREDENTIALS_PATH):
+        if not exists(self.get_credentials_path()):
             credentials = {
                 "clientID": client_id,
                 "clientSecret": client_secret,
                 "redirectUri": "http://localhost:8080/callback",
                 "scope": "streaming user-read-playback-state user-modify-playback-state user-read-currently-playing playlist-read-private"
                 }
-            with open(CREDENTIALS_PATH, "w") as file:
+            with open(self.get_credentials_path(), "w") as file:
                 json.dump(credentials, file, indent=4)
-        credentials = json.load(open(CREDENTIALS_PATH))
+        credentials = json.load(open(self.get_credentials_path()))
         self.client = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=credentials["clientID"],
                                                                 client_secret=credentials["clientSecret"],
                                                                 redirect_uri=credentials["redirectUri"],
@@ -159,7 +156,7 @@ class SpotifyExtension:
     @include_get
     def get_data(self):
         data = {}
-        songIdName = EXTENSION_NAME + "_" + "songname"
+        songIdName = self.get_extension_name() + "_" + "songname"
         data[songIdName] = self.get_current_playback_name()
         return data
 

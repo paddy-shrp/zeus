@@ -1,18 +1,13 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import inspect
-
 import settings as settings
+import extensions
+import managers
 
-# Extensions
-from managers.show_manager.show_manager import ShowManager
-from extensions.weatherExtension import WeatherExtension
-from extensions.spotifyExtension import SpotifyExtension
 
-showManager = ShowManager()
-weatherExt = WeatherExtension()
-spotifyExt = SpotifyExtension()
-
+exts = extensions.get_extensions_initalized()
+mgs = managers.get_managers_initalized()
 
 app = FastAPI()
 
@@ -29,23 +24,24 @@ app.add_middleware(
 def read_root():
     return 200
 
-def generate_routes(ext_name, module):
-     for name, method in inspect.getmembers(module, inspect.ismethod):
-            if name == "__init__": continue
-            if name == "include": continue
-            if not hasattr(method, 'included'): continue
-            path = f"/{ext_name}/{name}/"
+def generate_routes(prefix, ext_name, module):
+    for name, method in inspect.getmembers(module, inspect.ismethod):
+        if name == "__init__": continue
+        if name == "include": continue
+        if not hasattr(method, 'included'): continue
+        path = f"/{prefix}/{ext_name}/{name}/"
 
-            tag = ext_name
-            if name == "get_data":
-                 path = f"/data/{ext_name}" 
-                 tag = "data"
-            app.add_api_route(path, method, tags=[tag], methods=[method.request_type])
+        tag = f"{prefix} - {ext_name}"
+        if name == "get_data":
+            path = f"/data/{prefix}/{ext_name}" 
+            tag = "data"
+        app.add_api_route(path, method, tags=[tag], methods=[method.request_type])
 
+for name, ext in exts.items():
+    generate_routes("extensions", name, ext)
 
-generate_routes("weather", weatherExt)
-generate_routes("spotify", spotifyExt)
-generate_routes("showmanager", showManager)
+for name, mg in mgs.items():
+    generate_routes("managers", name, mg)
 
 if __name__ == "__main__":
     import uvicorn
