@@ -2,6 +2,7 @@ from threading import Thread
 import time
 import ast
 from time import sleep
+from os.path import exists
 
 # Extension Imports
 from utils.decorators import *
@@ -167,6 +168,5 @@ class ShowManager():
 
     @include_put
     def play_file_request(self, path):
-        # Check for existence
-        # Run File with Threading
-        pass
+        if not exists(path): return 400
+        Thread(target=self.play_file, args=(path)).start()

@@ -10,8 +10,8 @@ managers/__init__.py
 managers/morse/__init__.py
 managers/morse/morseCode.py
 managers/morse/morseLights.py
-managers/showmanager/__init__.py
-managers/showmanager/showmanager.py
+managers/show_manager/__init__.py
+managers/show_manager/show_manager.py
 utils/__init__.py
 utils/decorators.py
 zeus.egg-info/PKG-INFO

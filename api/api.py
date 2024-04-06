@@ -5,7 +5,7 @@ import inspect
 import settings as settings
 
 # Extensions
-from managers.showmanager.showmanager import ShowManager
+from managers.show_manager.show_manager import ShowManager
 from extensions.weatherExtension import WeatherExtension
 from extensions.spotifyExtension import SpotifyExtension
 

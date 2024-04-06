@@ -21,4 +21,20 @@ Currently configured for:
 - Tuya Devices
 
 ## Structure
+
 ![ZEUS](https://github.com/paddy-shrp/zeus/assets/50612943/8288fab9-cb47-452b-ab49-96b4fbe49235)
+
+### File Structure
+api/
+extensions/
+├─ example_extension_0/
+├─ example_extension_1/
+├─ example_extension_2/
+managers/
+├─ example_manager_0/
+├─ example_manager_1/
+├─ example_manager_2/
+utils/
+tests/
+data_logger/
+ai/
