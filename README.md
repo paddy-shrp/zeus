@@ -1,10 +1,5 @@
 # ZEUS Project
 
-## Project Status: On Hold
-
-Development of ZEUS is currently paused due to recent developments in Matter and the Thread-Protocol
-It will be continued once the Smart-Home Market finds its specifications.
-
 ## Setup
 
 The "startup.py" file triggers the setups of the current extensions.
