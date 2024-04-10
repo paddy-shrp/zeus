@@ -6,10 +6,11 @@ The "startup.py" file triggers the setups of the current extensions.
 
 ## What ZEUS is about
 
-This project is designed to make smart home unified and offer more fluid control over it from a Python perspective.
-It will advance towards a maintainable API where all the displays in a smart home can refer to. It should also support data logging of sensor data from every smart home device, thus making it usable for a data analysis or smart home automation predictions.
+This project is designed to make api control more unified and lean on better control over it from a Python perspective.
+It will advance towards a maintainable API where all websites easily can refer to. It should also support data logging of api data, thus making it usable for a data analysis or workflow automation predictions.
 
 Currently configured for:
+- Google Calendar API
 - Spotify API
 - OpenWeatherMap API
 - Philips Hue Devices
