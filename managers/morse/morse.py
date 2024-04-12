@@ -1,7 +1,7 @@
 from time import sleep
 from threading import Thread
 from utils.decorators import *
-from utils.manager import Manager
+from utils.objects.manager import Manager
 from managers.morse import morseCode as morse
 
 # Intervals

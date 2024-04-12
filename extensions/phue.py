@@ -2,10 +2,8 @@ from random import randint
 from threading import Thread
 from time import sleep, time
 from phue import Bridge
-from os.path import exists
 from utils.decorators import *
-from utils.extension import Extension
-import json
+from utils.objects.extension import Extension
 
 
 # Hue: 7227
@@ -14,12 +12,9 @@ import json
 
 class PHue(Extension):
     def __init__(self, host=""):
-        if not exists(self.get_credentials_path()):
-            credentials = {"IP": host}
-            with open(self.get_credentials_path(), "w") as file:
-                json.dump(credentials, file, indent=4)
-        credentials = json.load(open(self.get_credentials_path()))
-        self.bridge = Bridge(credentials["IP"])
+        default_settings = {"IP": host}
+        settings = self.get_extension_settings(default_settings)
+        self.bridge = Bridge(settings["IP"])
 
     def set_light_state(self, ids, on: bool = None, bri: int = None, hue: int = None, sat: int = None, transitiontime: int = None):
         cmds = {}

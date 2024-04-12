@@ -1,27 +1,22 @@
 import spotipy
 from spotipy import SpotifyOAuth
-from os.path import exists
 from utils.decorators import *
-from utils.extension import Extension
-import json
+from utils.objects.extension import Extension
 
 class Spotify(Extension):
 
     def __init__(self, client_id="", client_secret=""):
-        if not exists(self.get_credentials_path()):
-            credentials = {
+        default_settings = {
                 "clientID": client_id,
                 "clientSecret": client_secret,
                 "redirectUri": "http://localhost:8080/callback",
-                "scope": "streaming user-read-playback-state user-modify-playback-state user-read-currently-playing playlist-read-private"
+                "scopes": "streaming user-read-playback-state user-modify-playback-state user-read-currently-playing playlist-read-private"
                 }
-            with open(self.get_credentials_path(), "w") as file:
-                json.dump(credentials, file, indent=4)
-        credentials = json.load(open(self.get_credentials_path()))
-        self.client = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=credentials["clientID"],
-                                                                client_secret=credentials["clientSecret"],
-                                                                redirect_uri=credentials["redirectUri"],
-                                                                scope=credentials["scopes"]))
+        settings = self.get_extension_settings(default_settings)
+        self.client = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=settings["clientID"],
+                                                                client_secret=settings["clientSecret"],
+                                                                redirect_uri=settings["redirectUri"],
+                                                                scope=settings["scopes"]))
 
     @include_post
     def play(self, songuri, device_id = None, addtoqueue = False):
@@ -78,7 +73,6 @@ class Spotify(Extension):
     def get_active_devices(self):
         return self.client.devices()["devices"]
 
-    @include_get
     def is_device_active(self, device_id):
         try:
             active_devices = self.get_active_devices()
@@ -90,69 +84,59 @@ class Spotify(Extension):
         except:
             return False
 
-    @include_get
     def get_audio_analysis(self, trackID):
         try:
             return self.client.audio_analysis(trackID)
         except:
             pass
 
-    @include_get
     def get_current_playback(self):
         try:
             return self.client.current_playback()
         except:
-            pass
+            return 504
 
     @include_get
     def is_playing(self):
         try:
             return self.get_current_playback()["is_playing"]
-        except:
-            pass
+        except: return 500
 
     @include_get
     def get_current_device_id(self):
         try:
             return self.get_current_playback()["device"]["id"]
-        except:
-            pass
+        except: return 500
 
     @include_get
     def get_progress(self):
         try:
             return self.get_current_playback()["progress_ms"] / 1000
-        except:
-            pass
-
+        except: return 500
+        
     @include_get
     def get_current_playback_item(self):
         try:
             return self.get_current_playback()["item"]
-        except:
-            pass
+        except: return 500
 
     @include_get
     def get_current_playback_name(self):
-        try:
+        try: 
             return self.get_current_playback()["item"]["name"]
-        except:
-            pass
+        except: return 500
 
-    @include_get
     def get_current_playback_link(self):
-        try:
+        try: 
             return self.get_current_playback()["item"]["href"]
-        except:
-            pass
+        except: return 500
 
     @include_get
     def get_current_playback_uri(self):
-        try:
+        try: 
             return self.get_current_playback()["item"]["uri"]
-        except:
-            pass
-
+        except: return 500
+        
     @include_get
     def get_data(self):
         data = {}

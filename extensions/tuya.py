@@ -1,11 +1,11 @@
 from os.path import exists
+import json
 from utils.decorators import *
-from utils.extension import Extension
+from utils.objects.extension import Extension
 import shutil
 from threading import Thread
 from time import time, sleep
 import tinytuya as tuya
-import json
 
 class Tuya(Extension):
     def __init__(self):

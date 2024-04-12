@@ -1,17 +1,17 @@
 import os
 from os.path import exists
 
-import settings as settings
+import utils.settings as settings
 
 # Extension Imports
 import extensions
 
-if not exists("./credentials"):
-    path = "./credentials"
-    os.mkdir(path)
+credentials_path = "./credentials"
+if not exists(credentials_path):
+    os.mkdir(credentials_path)
 
 # Settings
-settings.get_settings()
+settings.init_settings()
 
 # Extensions
 extensions.get_extensions_initalized()

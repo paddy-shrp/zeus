@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import inspect
-import settings as settings
+import utils.settings as settings
 import extensions
 import managers
 
@@ -32,6 +32,7 @@ def generate_routes(prefix, ext_name, module):
 
         tag = f"{prefix} - {ext_name}"
         if name == "get_data":
+
             path = f"/data/{prefix}/{ext_name}" 
             tag = "data"
         app.add_api_route(path, method, tags=[tag], methods=[method.request_type])
@@ -45,5 +46,6 @@ for name, mg in mgs.items():
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="127.0.0.1", port=8000)
+    
 
 # uvicorn api:app --reload

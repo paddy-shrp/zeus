@@ -1,5 +1,5 @@
 from utils.getters import *
-import settings
+import utils.settings as settings
 from importlib import import_module
 
 def get_managers(filter=[]):
@@ -10,9 +10,13 @@ def get_managers(filter=[]):
     managers = {}
     for module_name, class_name in include_managers.items():
         module_path = base_path + module_name + "." + module_name
-        module = import_module(module_path)
-        class_ = getattr(module, class_name)
-        managers[class_.get_manager_name()] = class_
+
+        try: 
+            module = import_module(module_path)
+            class_ = getattr(module, class_name)
+            managers[class_.get_manager_name()] = class_
+        except:
+            print("Manager " + module_name + " not found!")
 
     return get_objects_filtered(managers, filter)
 

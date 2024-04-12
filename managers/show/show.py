@@ -4,7 +4,7 @@ import ast
 from time import sleep
 from os.path import exists
 
-from utils.manager import Manager
+from utils.objects.manager import Manager
 from utils.decorators import *
 from extensions.spotify import Spotify
 from extensions.phue import PHue

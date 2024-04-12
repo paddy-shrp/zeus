@@ -1,7 +1,5 @@
-from os.path import exists
 from utils.decorators import *
-from utils.extension import Extension
-import json
+from utils.objects.extension import Extension
 import requests
 import time
 
@@ -10,12 +8,9 @@ CURRENT_URL = "https://api.openweathermap.org/data/2.5/weather"
 
 class Weather(Extension):
 
-    def __init__(self, apiKey="", lat="", lon=""):
-        if not exists(self.get_credentials_path()):
-            credentials = {"apiKey": apiKey, "lat": lat, "lon": lon}
-            with open(self.get_credentials_path(), "w") as file:
-                json.dump(credentials, file, indent=4)
-        credentials = json.load(open(self.get_credentials_path()))
+    def __init__(self, apiKey="", lat="", lon="", units=""):
+        default_settings = {"apiKey": apiKey, "lat": lat, "lon": lon, "units": units}
+        credentials = self.get_extension_settings(default_settings)
         self.apiKey = credentials["apiKey"]
         self.lat = credentials["lat"]
         self.lon = credentials["lon"]
