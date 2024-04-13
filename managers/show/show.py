@@ -128,6 +128,8 @@ class Show(Manager):
                         self.spotifyExt.play(uri)
                     case "pause":
                         self.spotifyExt.pause()
+                    case "resume":
+                        self.spotifyExt.resume()
                     case "volume":
                         if argsCount < 2:
                             return

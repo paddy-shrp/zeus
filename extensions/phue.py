@@ -5,7 +5,6 @@ from phue import Bridge
 from utils.decorators import *
 from utils.objects.extension import Extension
 
-
 # Hue: 7227
 # Sat: 223
 # ct: 494

@@ -18,68 +18,93 @@ class Spotify(Extension):
                                                                 redirect_uri=settings["redirectUri"],
                                                                 scope=settings["scopes"]))
 
+    # Return Codes need to be adjusted
+
     @include_post
-    def play(self, songuri, device_id = None, addtoqueue = False):
-        if device_id == None:
-            if len(self.get_active_devices()) < 1:
-                return False
-        else:
+    def play(self, song, device_id = None):
+
+        if device_id != None:
             if not self.is_device_active(device_id):
-                return False
+                return 504
+
+        if self.is_spotify_link(song):
+            song = self.get_uri_from_link(song)
 
         try:
-            if addtoqueue:
-                self.client.add_to_queue(songuri, device_id)
+            if "album" in song or "playlist" in song:
+                self.client.start_playback(device_id, context_uri=song)
             else:
-                if (self.is_playing()):
-                    self.client.pause_playback()
-                self.client.start_playback(device_id, uris=[songuri])
-            return True
-        except:
-            return False
+                self.client.start_playback(device_id, uris=[song])
+            return 200
+        except: return 504
 
     @include_put
     def pause(self):
         try:
-            if self.is_playing():
-                self.client.pause_playback()
-        except:
-            pass
-
+            self.client.pause_playback()
+            return 200
+        except: return 504
+        
     @include_put
-    def unpause(self):
+    def resume(self):
         try:
-            if not self.is_playing():
-                self.client.start_playback()
-        except:
-            pass
+            self.client.start_playback()
+            return 200
+        except: return 504
 
     @include_put
     def set_volume(self, volumePercent, device_id=None):
-        if device_id == None:
-            if len(self.get_active_devices()) < 1:
-                return False
-        else:
+
+        if device_id != None:
             if not self.is_device_active(device_id):
                 return False
 
         try:
             self.client.volume(volumePercent, device_id)
-            return True
+            return 200
         except:
-            return False
+            return 504
+        
+    @include_put
+    def previous(self):
+        try:
+            self.client.previous_track()
+            return 200
+        except: return 504
+    
+    @include_put
+    def skip(self):
+        try:
+            self.client.next_track()
+            return 200
+        except: return 504
 
     @include_get
     def get_active_devices(self):
-        return self.client.devices()["devices"]
+        try:
+            return self.client.devices()["devices"]
+        except: return 504
+
+    @include_get
+    def get_current_device(self):
+        try:
+            return self.get_current_playback()["device"]
+        except: return 504
+
+    @include_put
+    def change_current_device(self, device_id):
+        try:
+            self.client.transfer_playback(device_id)
+            return 200
+        except:
+            return 504
 
     def is_device_active(self, device_id):
         try:
             active_devices = self.get_active_devices()
-            if not active_devices == None:
-                return
+            if active_devices == None: return False
             for activeDevice in active_devices:
-                if activeDevice["name"] == device_id:
+                if activeDevice["id"] == device_id:
                     return True
         except:
             return False
@@ -87,25 +112,18 @@ class Spotify(Extension):
     def get_audio_analysis(self, trackID):
         try:
             return self.client.audio_analysis(trackID)
-        except:
-            pass
+        except: return 504
 
+    @include_get
     def get_current_playback(self):
         try:
             return self.client.current_playback()
-        except:
-            return 504
+        except: return 504
 
     @include_get
     def is_playing(self):
         try:
             return self.get_current_playback()["is_playing"]
-        except: return 500
-
-    @include_get
-    def get_current_device_id(self):
-        try:
-            return self.get_current_playback()["device"]["id"]
         except: return 500
 
     @include_get
@@ -120,7 +138,6 @@ class Spotify(Extension):
             return self.get_current_playback()["item"]
         except: return 500
 
-    @include_get
     def get_current_playback_name(self):
         try: 
             return self.get_current_playback()["item"]["name"]
@@ -131,7 +148,6 @@ class Spotify(Extension):
             return self.get_current_playback()["item"]["href"]
         except: return 500
 
-    @include_get
     def get_current_playback_uri(self):
         try: 
             return self.get_current_playback()["item"]["uri"]
@@ -140,8 +156,20 @@ class Spotify(Extension):
     @include_get
     def get_data(self):
         data = {}
-        songIdName = self.get_extension_name() + "_" + "songname"
-        data[songIdName] = self.get_current_playback_name()
         return data
+    
+    def is_spotify_link(self, value:str):
+        return "https://open.spotify.com/" in value
+
+    def get_uri_from_link(self, link:str):
+        base = "spotify:"
+        link = link.replace("https://open.spotify.com/", "")
+        link = link[:link.find("?")]
+        link = link.replace("/", ":")
+
+        return base + link
+
+# https://open.spotify.com/track/1qwZ8rW8EGBf6sLUANCFZs?si=1e0e51670cbe4116
+# spotify:track:1qwZ8rW8EGBf6sLUANCFZs
 
 #uri = "spotify:track:6AjlKVY7CbQi64zPbMEPZA"
