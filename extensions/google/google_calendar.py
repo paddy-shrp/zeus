@@ -5,14 +5,14 @@ from utils.objects.extension import Extension
 
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
-import google_init
+import extensions.google.google_init as g_init
 
 DT_TIME_ZONE = pytz.timezone("Europe/Berlin")
 
 class GoogleCalendar(Extension):
     def __init__(self):
 
-        self.credentials = google_init.init_google_api()
+        self.credentials = g_init.init_google_api()
 
         try: 
             self.service = build("calendar", "v3", credentials=self.credentials)

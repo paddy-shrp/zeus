@@ -56,13 +56,14 @@ def get_extension_settings(ext_name, default_settings={}):
 def get_manager_settings(mg_name, default_settings={}):
     if not exists(MANAGER_SETTINGS_PATH):
         init_settings()
-        manager_settings = json.load(open(MANAGER_SETTINGS_PATH))
+    
+    manager_settings = json.load(open(MANAGER_SETTINGS_PATH))
 
-        if mg_name in manager_settings:
-            return manager_settings[mg_name]
-        else:
-            manager_settings[mg_name] = default_settings
-            with open(MANAGER_SETTINGS_PATH, "w") as file:
-                json.dump(manager_settings, file, indent=4)
-            return manager_settings[mg_name]
+    if mg_name in manager_settings:
+        return manager_settings[mg_name]
+    else:
+        manager_settings[mg_name] = default_settings
+        with open(MANAGER_SETTINGS_PATH, "w") as file:
+            json.dump(manager_settings, file, indent=4)
+        return manager_settings[mg_name]
     

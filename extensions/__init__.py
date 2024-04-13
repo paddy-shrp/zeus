@@ -1,6 +1,7 @@
 from utils.getters import *
 import utils.settings as settings
 from importlib import import_module
+from extensions.google.google_calendar import GoogleCalendar
 
 def get_extensions(filter=[]):
     
@@ -13,9 +14,12 @@ def get_extensions(filter=[]):
         try: 
             module = import_module(module_path)
             class_ = getattr(module, class_name)
-            extensions[class_.get_extension_name()] = class_
-        except:
+            extensions[module_name] = class_
+        except Exception as e:
+            print(e)
             print("Extension " + module_name + " not found!")
+    
+    print(extensions)
  
     return get_objects_filtered(extensions, filter)
 
