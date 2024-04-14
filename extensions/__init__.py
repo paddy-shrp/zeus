@@ -14,12 +14,10 @@ def get_extensions(filter=[]):
         try: 
             module = import_module(module_path)
             class_ = getattr(module, class_name)
-            extensions[module_name] = class_
+            extensions[class_.get_extension_name()] = class_
         except Exception as e:
             print(e)
             print("Extension " + module_name + " not found!")
-    
-    print(extensions)
  
     return get_objects_filtered(extensions, filter)
 

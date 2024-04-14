@@ -46,7 +46,7 @@ class Weather(Extension):
             return response.status_code
 
     @include_get
-    def get_current(self):
+    async def get_current(self):
         if self.last_current == {}: 
             self.current_call()
             return self.last_current
@@ -59,7 +59,7 @@ class Weather(Extension):
         return self.last_current
     
     @include_get
-    def get_forecast(self):
+    async def get_forecast(self):
         if self.last_forecast == {}:
             self.forecast_call()
             return self.last_forecast
@@ -72,5 +72,5 @@ class Weather(Extension):
         return self.last_forecast
 
     @include_get
-    def get_data(self):
+    async def get_data(self):
         return {}

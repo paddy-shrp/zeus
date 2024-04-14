@@ -2,6 +2,7 @@ from os.path import exists
 import json
 from utils.decorators import *
 from utils.objects.extension import Extension
+
 import shutil
 from threading import Thread
 from time import time, sleep
@@ -25,7 +26,8 @@ class Tuya(Extension):
             shutil.move("./snapshot.json", destPath)
         return json.load(open(destPath))["devices"]
 
-    def set_light_state(self, ids, on: bool):
+    @include_put
+    async def set_light_state(self, ids, on: bool):
         if isinstance(ids, int):
             Thread(target=self.deviceList[id].set_value, args=(1, on,)).start()
         else:
@@ -33,13 +35,16 @@ class Tuya(Extension):
                 Thread(target=self.deviceList[id].set_value, args=(
                     1, on,)).start()
 
-    def on(self, ids):
+    @include_put
+    async def on(self, ids):
         self.set_light_state(ids, True)
 
-    def off(self, ids):
+    @include_put
+    async def off(self, ids):
         self.set_light_state(ids, False)
 
-    def start_flicker(self, ids, duration=3, frequency=1):
+    @include_put
+    async def start_flicker(self, ids, duration=3, frequency=1):
         Thread(target=self.__flicker, args=(
             ids, duration, frequency)).start()
 
@@ -54,13 +59,6 @@ class Tuya(Extension):
         self.off(ids)
 
     @include_get
-    def get_data(self):
+    async def get_data(self):
         data = {}
-        for device in self.deviceList:
-            try:
-                d_status = device.status()
-                dataIdName = self.get_extension_name() + "_" + d_status["devId"]
-                data[dataIdName] = 1 if d_status["dps"]["1"] else 0
-            except:
-                pass
         return data

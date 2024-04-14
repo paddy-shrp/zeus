@@ -89,5 +89,5 @@ class Morse(Manager):
         Thread(target=self.lights_off).start()
 
     @include_put
-    def run_request(self, message, cylces=1):
+    async def run_request(self, message, cylces=1):
         Thread(target=self.show_morse, args=(message, cylces)).start()

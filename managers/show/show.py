@@ -168,10 +168,6 @@ class Show(Manager):
             sleep(0.01)
 
     @include_put
-    def play_file_request(self, path):
+    async def play_file_request(self, path):
         if not exists(path): return 400
         Thread(target=self.play_file, args=(path)).start()
-
-    @include_get
-    def get_data(self):
-        return {}

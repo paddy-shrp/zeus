@@ -21,7 +21,7 @@ class GoogleCalendar(Extension):
             print(f"An error occured: {error}")
 
     @include_get
-    def get_todays_agenda(self, calendar_names):
+    async def get_todays_agenda(self, calendar_names):
 
         timeMin = dt.datetime.combine(dt.datetime.now(), dt.time.min, DT_TIME_ZONE).isoformat()
         timeMax = dt.datetime.combine(dt.datetime.now(), dt.time.max, DT_TIME_ZONE).isoformat()
@@ -30,7 +30,7 @@ class GoogleCalendar(Extension):
         return events_today
 
     @include_get
-    def get_calendars(self):
+    async def get_calendars(self):
         if self.service == None: return 500
 
         raw_calendars = self.service.calendarList().list().execute()
@@ -46,7 +46,7 @@ class GoogleCalendar(Extension):
         return calendars
         
     @include_get
-    def get_events(self, calendar_names=["primary"], timeMin=None, timeMax=None):
+    async def get_events(self, calendar_names=["primary"], timeMin=None, timeMax=None):
         if self.service == None: return 500
 
         if "primary" in calendar_names:
@@ -102,5 +102,5 @@ class GoogleCalendar(Extension):
         return sorted_events
 
     @include_get
-    def get_data(self):
+    async def get_data(self):
         return {}

@@ -32,27 +32,28 @@ class PHue(Extension):
         self.bridge.set_light(ids, cmds)
 
     @include_put
-    def on(self, ids, transitiontime=0):
+    async def on(self, ids, transitiontime=0):
         self.set_light_state(ids, on=True, transitiontime=transitiontime)
 
     @include_put
-    def off(self, ids, transitiontime=0):
+    async def off(self, ids, transitiontime=0):
         self.set_light_state(ids, on=False, transitiontime=transitiontime)
 
     @include_put
-    def temp_on(self, ids, transitiontime=0):
+    async def temp_on(self, ids, transitiontime=0):
         self.set_light_state(ids, bri=255, transitiontime=transitiontime)
 
     @include_put
-    def temp_off(self, ids, transitiontime=0):
+    async def temp_off(self, ids, transitiontime=0):
         self.set_light_state(ids, bri=0, transitiontime=transitiontime)
 
     @include_put
-    def set_to_base_color(self, ids, transitiontime=4):
+    async def set_to_base_color(self, ids, transitiontime=4):
         self.bridge.set_light(
             ids, self.get_base_color_command(255, transitiontime))
 
-    def start_flicker(self, ids, duration=3, frequency=1):
+    @include_put
+    async def start_flicker(self, ids, duration=3, frequency=1):
         Thread(target=self.__flicker, args=(
             ids, duration, frequency)).start()
 
@@ -66,7 +67,8 @@ class PHue(Extension):
             sleep(fTime)
         self.temp_off(ids)
 
-    def start_color_switch(self, ids, duration=3, transitiontime=1, waitTime=0.5):
+    @include_put
+    async def start_color_switch(self, ids, duration=3, transitiontime=1, waitTime=0.5):
         Thread(target=self.__color_switch, args=(
             ids, duration, transitiontime, waitTime)).start()
 
@@ -78,7 +80,8 @@ class PHue(Extension):
             sleep(waitTime)
         self.bridge.set_light(ids, self.get_base_color_command(0))
 
-    def start_pulse(self, ids, duration=3, frequency=0.5, stepCount=10, minBri=100, maxBri=255):
+    @include_put
+    async def start_pulse(self, ids, duration=3, frequency=0.5, stepCount=10, minBri=100, maxBri=255):
         Thread(target=self.__pulse, args=(
             ids, duration, frequency, stepCount, minBri, maxBri)).start()
 
@@ -107,13 +110,10 @@ class PHue(Extension):
         return cmds
 
     @include_get
-    def get_lights(self):
+    async def get_lights(self):
         return self.bridge.lights
 
     @include_get
-    def get_data(self):
+    async def get_data(self):
         data = {}
-        for light in self.bridge.lights:
-            dataIdName = self.get_extension_name() + "_" + str(light.light_id)
-            data[dataIdName] = 1 if light.on else 0
         return data

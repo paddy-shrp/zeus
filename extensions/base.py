@@ -7,3 +7,7 @@ class Base(Extension):
         default_settings = {}
         settings = self.get_extension_settings(default_settings)
         
+    @include_get
+    async def get_data(self):
+        data = {}
+        return data
