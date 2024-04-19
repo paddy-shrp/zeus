@@ -1,14 +1,18 @@
 import os
-from os.path import exists
+import shutil
 
 import utils.settings as settings
+import utils.credentials as credentials
 
-# Extension Imports
 import extensions
 
-credentials_path = "./credentials"
-if not exists(credentials_path):
-    os.mkdir(credentials_path)
+credentials.init_credentials()
+
+# if not credentials.credentials_exist("api.key"):
+#     os.system("openssl genrsa -out api.key 2048")
+#     os.system("openssl req -x509 -new -nodes -key api.key -sha256 -days 365 -out api.crt")
+#     shutil.move("./api.key", credentials.get_path("api.key"))
+#     shutil.move("./api.crt", credentials.get_path("api.crt"))
 
 # Settings
 settings.init_settings()

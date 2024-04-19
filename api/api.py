@@ -1,12 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-import inspect
 import utils.settings as settings
-import extensions
-import managers
-
-exts = extensions.get_extensions_initalized()
-mgs = managers.get_managers_initalized()
+import utils.credentials as credentials
+import api_routes
+import uvicorn
 
 app = FastAPI()
 
@@ -23,29 +20,15 @@ app.add_middleware(
 def read_root():
     return 200
 
-def generate_routes(prefix, ext_name, module):
-    for name, method in inspect.getmembers(module, inspect.ismethod):
-        if name == "__init__": continue
-        if name == "include": continue
-        if not hasattr(method, 'included'): continue
-        path = f"/{prefix}/{ext_name}/{name}/"
-
-        tag = f"{prefix} - {ext_name}"
-        if name == "get_data":
-
-            path = f"/data/{prefix}/{ext_name}" 
-            tag = "data"
-        app.add_api_route(path, method, tags=[tag], methods=[method.request_type])
-
-for name, ext in exts.items():
-    generate_routes("extensions", name, ext)
-
-for name, mg in mgs.items():
-    generate_routes("managers", name, mg)
+api_routes.generate_ext_mg_routes(app)
 
 if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+    # ssl_crt = credentials.get_path("api.crt")
+    # ssl_key = credentials.get_path("api.key")
+    # config = uvicorn.Config(app, host="127.0.0.1", port=8000, ssl_certfile=ssl_crt, ssl_keyfile=ssl_key)
+    config = uvicorn.Config(app, host="127.0.0.1", port=8000)
+    server = uvicorn.Server(config)
+    server.run()
     
 
 # uvicorn api:app --reload
