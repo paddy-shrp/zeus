@@ -11,9 +11,7 @@ SHORT_PAUSE_DURATION = 0.75
 LONG_PAUSE_DURATION = 1.5
 CYCLE_PAUSE_DURATION = 10
 
-from extensions.spotify import Spotify
-from extensions.phue import PHue
-from extensions.tuya import Tuya
+import extensions as exts
 
 phueLights = {9, 10}
 tuyaLights = {1}
@@ -21,9 +19,10 @@ tuyaLights = {1}
 class Morse(Manager):
 
     def __init__(self):
-        self.spotifyExt = Spotify()
-        self.phueExt = PHue()
-        self.tuyaExt = Tuya()
+        extensions = exts.get_extensions()
+        self.spotifyExt = extensions["spotify"]
+        self.phueExt = extensions["phue"]
+        self.tuyaExt = extensions["tuya"]
 
     def init_lights(self):
         self.phueExt.set_to_base_color(phueLights, 0)

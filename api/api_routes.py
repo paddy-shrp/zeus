@@ -2,8 +2,8 @@ import inspect
 import extensions
 import managers
 
-exts = extensions.get_extensions_initalized()
-mgs = managers.get_managers_initalized()
+exts = extensions.get_extensions()
+mgs = managers.get_managers()
 
 def generate_routes(app, prefix, ext_name, module):
     for name, method in inspect.getmembers(module, inspect.ismethod):

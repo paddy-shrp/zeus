@@ -6,9 +6,7 @@ from os.path import exists
 
 from utils.objects.manager import Manager
 from utils.decorators import *
-from extensions.spotify import Spotify
-from extensions.phue import PHue
-from extensions.tuya import Tuya
+import extensions as exts
 
 # Make dynamic
 PHUE_LIGHT_IDS = {3, 4, 5, 6, 8}
@@ -16,9 +14,10 @@ TUYA_LIGHT_IDS = {0, 1, 2}
 
 class Show(Manager):
     def __init__(self):
-        self.spotifyExt = Spotify()
-        self.phueExt = PHue()
-        self.tuyaExt = Tuya()
+        extensions = exts.get_extensions()
+        self.spotifyExt = extensions["spotify"]
+        self.phueExt = extensions["phue"]
+        self.tuyaExt = extensions["tuya"]
         self.phue_light_ids = PHUE_LIGHT_IDS
         self.tuya_light_ids = TUYA_LIGHT_IDS
 

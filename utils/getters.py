@@ -5,10 +5,3 @@ def get_objects_filtered(objects, filter=[]):
     else:
         return objects
 
-
-def get_objects_initalized(objects):
-    for name in objects.keys():
-        objects[name] = objects[name]()
-
-    return objects
-
