@@ -1,9 +1,9 @@
 from random import randint
 from threading import Thread
 from time import sleep, time
-from phue import Bridge
 from utils.decorators import *
 from utils.objects.extension import Extension
+from extensions.phue_v2.Bridge import Bridge
 
 # Hue: 7227
 # Sat: 223
@@ -13,9 +13,9 @@ class PHue(Extension):
     def __init__(self, host=""):
         default_settings = {"IP": host}
         settings = self.get_extension_settings(default_settings)
-        self.bridge = Bridge(settings["IP"])
+        self.hue = Bridge(settings["IP"])
 
-    def set_light_state(self, ids, on: bool = None, bri: int = None, hue: int = None, sat: int = None, transitiontime: int = None):
+    def set_light_state(self, ids, on = None, bri = None, hue = None, sat = None, transitiontime = None):
         cmds = {}
         if on is not None:
             cmds["on"] = on
@@ -26,34 +26,33 @@ class PHue(Extension):
         if sat is not None:
             cmds["sat"] = sat
         if transitiontime is not None:
-            cmds["transitiontime"] = transitiontime
             if transitiontime < 4 and on is True and bri is None:
                 cmds["bri"] = 255
-        self.bridge.set_light(ids, cmds)
+        self.hue.bridge.set_light(ids)
 
     @include_put
-    async def on(self, ids, transitiontime=0):
-        self.set_light_state(ids, on=True, transitiontime=transitiontime)
+    def on(self, ids, transitiontime:int = None):
+        return self.set_light_state(ids, on=True, transitiontime=transitiontime)
 
     @include_put
-    async def off(self, ids, transitiontime=0):
-        self.set_light_state(ids, on=False, transitiontime=transitiontime)
+    def off(self, ids, transitiontime:int = None):
+        return self.set_light_state(ids, on=False, transitiontime=transitiontime)
 
     @include_put
-    async def temp_on(self, ids, transitiontime=0):
-        self.set_light_state(ids, bri=255, transitiontime=transitiontime)
+    def temp_on(self, ids, transitiontime:int = None):
+        return self.set_light_state(ids, bri=255, transitiontime=transitiontime)
 
     @include_put
-    async def temp_off(self, ids, transitiontime=0):
-        self.set_light_state(ids, bri=0, transitiontime=transitiontime)
+    def temp_off(self, ids, transitiontime:int = None):
+        return self.set_light_state(ids, bri=0, transitiontime=transitiontime)
 
     @include_put
-    async def set_to_base_color(self, ids, transitiontime=4):
+    def set_to_base_color(self, ids, transitiontime:int = 4):
         self.bridge.set_light(
             ids, self.get_base_color_command(255, transitiontime))
 
     @include_put
-    async def start_flicker(self, ids, duration=3, frequency=1):
+    def start_flicker(self, ids, duration:int = 3, frequency:int = 1):
         Thread(target=self.__flicker, args=(
             ids, duration, frequency)).start()
 
@@ -68,7 +67,7 @@ class PHue(Extension):
         self.temp_off(ids)
 
     @include_put
-    async def start_color_switch(self, ids, duration=3, transitiontime=1, waitTime=0.5):
+    def start_color_switch(self, ids, duration:int = 3, transitiontime:int = 1, waitTime:float = 0.5):
         Thread(target=self.__color_switch, args=(
             ids, duration, transitiontime, waitTime)).start()
 
@@ -81,7 +80,7 @@ class PHue(Extension):
         self.bridge.set_light(ids, self.get_base_color_command(0))
 
     @include_put
-    async def start_pulse(self, ids, duration=3, frequency=0.5, stepCount=10, minBri=100, maxBri=255):
+    async def start_pulse(self, ids, duration:int = 3, frequency:float = 0.5, stepCount:int = 10, minBri:int = 100, maxBri:int = 255):
         Thread(target=self.__pulse, args=(
             ids, duration, frequency, stepCount, minBri, maxBri)).start()
 

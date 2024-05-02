@@ -13,8 +13,12 @@ def get_credentials_json(path):
     if credentials_exist(path):
         return json.load(open(DIR_PATH + path))
 
+def write_credentials_json(path, credentials):
+    with open(DIR_PATH + path, "w") as file:
+         json.dump(credentials, file)
+
 def write_credentials(path, credentials):
-    with open(path, "w") as file:
+    with open(DIR_PATH + path, "w") as file:
             file.write(credentials)
 
 def credentials_exist(path=""):

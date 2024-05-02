@@ -6,7 +6,7 @@ from utils.settings import get_extension_settings
 from os.path import exists
 
 GOOGLE_EXT_NAME = "google_apis"
-TOKEN_PATH = "./credentials/google-token.json"
+TOKEN_PATH = "google-token.json"
 
 SCOPES = ["https://www.googleapis.com/auth/calendar"]
 
