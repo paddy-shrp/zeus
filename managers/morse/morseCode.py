@@ -1,10 +1,10 @@
+from utils.getters import get_dir_path
 import json
 
-morseFile = open("./managers/morse/morse.json")
+morseFile = open(get_dir_path(__file__) + "morse.json")
 morseTable = json.load(morseFile)
 
 morseFile.close()
-
 
 def parse_string_to_morse(msg: str):
     morseString = ""
