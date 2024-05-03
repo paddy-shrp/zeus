@@ -20,6 +20,10 @@ app.add_middleware(
 def read_root():
     return 200
 
+@app.get("/routes/{base:path}")
+def get_routes(base):
+    return [route.path for route in app.routes if route.path.startswith("/" + base)]
+
 api_routes.generate_ext_mg_routes(app)
 
 if __name__ == "__main__":
