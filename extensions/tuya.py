@@ -1,7 +1,6 @@
-from os.path import exists
-import json
 from utils.decorators import *
 from utils.objects.extension import Extension
+import utils.credentials as credentials
 
 import shutil
 from threading import Thread
@@ -20,11 +19,11 @@ class Tuya(Extension):
             self.deviceList.append(_device)
 
     def scanDevices(self):
-        destPath = "./credentials/snapshot.json"
-        if not exists(destPath):
+        file_name = "snapshot.json"
+        if not credentials.file_exists(file_name):
             tuya.scan()
-            shutil.move("./snapshot.json", destPath)
-        return json.load(open(destPath))["devices"]
+            shutil.move("./snapshot.json", credentials.get_path(file_name))
+        return credentials.get_credentials_json(file_name)["devices"]
 
     @include_put
     async def set_light_state(self, ids, on: bool):

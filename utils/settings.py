@@ -1,8 +1,9 @@
 import os
-from os.path import exists
+from os.path import exists, abspath, dirname
 import json
 
-DIR_PATH = "./settings/"
+DIR_PATH = dirname(dirname(abspath(__file__))) + "/settings/"
+
 MAIN_SETTINGS_PATH = f"{DIR_PATH}main.json"
 EXTENSION_SETTINGS_PATH = f"{DIR_PATH}extensions.json"
 MANAGER_SETTINGS_PATH = f"{DIR_PATH}managers.json"
