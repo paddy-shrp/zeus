@@ -26,7 +26,7 @@ class Tuya(Extension):
         return credentials.get_credentials_json(file_name)["devices"]
 
     @include_put
-    async def set_light_state(self, ids, on: bool):
+    def set_light_state(self, ids, on: bool):
         if isinstance(ids, int):
             Thread(target=self.deviceList[id].set_value, args=(1, on,)).start()
         else:
@@ -35,15 +35,15 @@ class Tuya(Extension):
                     1, on,)).start()
 
     @include_put
-    async def on(self, ids):
+    def on(self, ids):
         self.set_light_state(ids, True)
 
     @include_put
-    async def off(self, ids):
+    def off(self, ids):
         self.set_light_state(ids, False)
 
     @include_put
-    async def start_flicker(self, ids, duration=3, frequency=1):
+    def start_flicker(self, ids, duration=3, frequency=1):
         Thread(target=self.__flicker, args=(
             ids, duration, frequency)).start()
 
@@ -58,6 +58,6 @@ class Tuya(Extension):
         self.off(ids)
 
     @include_get
-    async def get_data(self):
+    def get_data(self):
         data = {}
         return data

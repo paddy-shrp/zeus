@@ -2,6 +2,7 @@ from utils.decorators import *
 from utils.objects.extension import Extension
 import requests
 import time
+import pandas as pd
 
 FORECAST_URL = "https://api.openweathermap.org/data/2.5/forecast"
 CURRENT_URL = "https://api.openweathermap.org/data/2.5/weather"
@@ -46,7 +47,7 @@ class Weather(Extension):
             return response.status_code
 
     @include_get
-    async def get_current(self):
+    def get_current(self):
         if self.last_current == {}: 
             self.current_call()
             return self.last_current
@@ -59,7 +60,7 @@ class Weather(Extension):
         return self.last_current
     
     @include_get
-    async def get_forecast(self):
+    def get_forecast(self):
         if self.last_forecast == {}:
             self.forecast_call()
             return self.last_forecast
@@ -72,5 +73,5 @@ class Weather(Extension):
         return self.last_forecast
 
     @include_get
-    async def get_data(self):
-        return {}
+    def get_data(self):
+        return self.get_current()

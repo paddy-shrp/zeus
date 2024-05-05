@@ -13,6 +13,13 @@ def init_settings():
         os.mkdir(DIR_PATH)
     if not exists(MAIN_SETTINGS_PATH):
         settings = { 
+            "timezone": "Europe/Berlin",
+            "data": {
+                "host": "https://eu-central-1-1.aws.cloud2.influxdata.com",
+                "org": "",
+                "key": "",
+                "bucket": "zeus"
+            },
             "allowed_origins": [
                 "http://localhost",
                 "http://127.0.0.1",

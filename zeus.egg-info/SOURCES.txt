@@ -3,7 +3,6 @@ README.md
 setup.py
 extensions/__init__.py
 extensions/base.py
-extensions/phue.py
 extensions/spotify.py
 extensions/tuya.py
 extensions/weather.py

@@ -21,7 +21,7 @@ class Spotify(Extension):
     # Return Codes need to be adjusted
 
     @include_post
-    async def play(self, song, device_id = None):
+    def play(self, song, device_id = None):
 
         if device_id != None:
             if not self.is_device_active(device_id):
@@ -39,21 +39,21 @@ class Spotify(Extension):
         except: return 504
 
     @include_put
-    async def pause(self):
+    def pause(self):
         try:
             self.client.pause_playback()
             return 200
         except: return 504
         
     @include_put
-    async def resume(self):
+    def resume(self):
         try:
             self.client.start_playback()
             return 200
         except: return 504
 
     @include_put
-    async def set_volume(self, volume_percent:int, device_id=None):
+    def set_volume(self, volume_percent:int, device_id=None):
 
         if device_id != None:
             if not self.is_device_active(device_id):
@@ -66,33 +66,33 @@ class Spotify(Extension):
             return 504
         
     @include_put
-    async def previous(self):
+    def previous(self):
         try:
             self.client.previous_track()
             return 200
         except: return 504
     
     @include_put
-    async def skip(self):
+    def skip(self):
         try:
             self.client.next_track()
             return 200
         except: return 504
 
     @include_get
-    async def get_active_devices(self):
+    def get_active_devices(self):
         try:
             return self.client.devices()["devices"]
         except: return 504
 
     @include_get
-    async def get_current_device(self):
+    def get_current_device(self):
         try:
             return self.get_current_playback()["device"]
         except: return 504
 
     @include_put
-    async def change_current_device(self, device_id):
+    def change_current_device(self, device_id):
         try:
             self.client.transfer_playback(device_id)
             return 200
@@ -119,31 +119,31 @@ class Spotify(Extension):
         except: return 504
 
     @include_get
-    async def get_current_playback(self):
+    def get_current_playback(self):
         try:
             return self.client.current_playback()
         except: return 504
 
     @include_get
-    async def is_playing(self):
+    def is_playing(self):
         try:
             return self.get_current_playback()["is_playing"]
         except: return 500
 
     @include_get
-    async def get_progress(self):
+    def get_progress(self):
         try:
             return self.get_current_playback()["progress_ms"] / 1000
         except: return 500
         
     @include_get
-    async def get_current_playback_item(self):
+    def get_current_playback_item(self):
         try:
             return self.get_current_playback()["item"]
         except: return 500
         
     @include_get
-    async def get_data(self):
+    def get_data(self):
         data = {}
         return data
     

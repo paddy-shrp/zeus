@@ -8,6 +8,6 @@ class Base(Extension):
         settings = self.get_extension_settings(default_settings)
         
     @include_get
-    async def get_data(self):
+    def get_data(self):
         data = {}
         return data
