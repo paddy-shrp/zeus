@@ -14,11 +14,8 @@ def init_settings():
     if not exists(MAIN_SETTINGS_PATH):
         settings = { 
             "timezone": "Europe/Berlin",
-            "data": {
-                "host": "https://eu-central-1-1.aws.cloud2.influxdata.com",
-                "org": "",
-                "key": "",
-                "bucket": "zeus"
+            "data_logger": {
+                "uri": "mongodb+srv://admin:IVctyiN3Tj3UJBYA@zeus.mmy6kbo.mongodb.net/?retryWrites=true&w=majority&appName=Zeus",
             },
             "allowed_origins": [
                 "http://localhost",

@@ -1,11 +1,18 @@
 import os
-import shutil
+from os.path import exists, abspath, dirname
 
 import utils.settings as settings
 import utils.credentials as credentials
 
 import extensions
+import managers
 
+# Logging
+LOG_PATH = dirname(abspath(__file__)) + "/logs"
+if not exists(LOG_PATH):
+        os.mkdir(LOG_PATH)
+
+# Credentials
 credentials.init_credentials()
 
 # if not credentials.credentials_exist("api.key"):
@@ -18,12 +25,7 @@ credentials.init_credentials()
 settings.init_settings()
 
 # Extensions
-extensions.get_extensions_initalized()
+extensions.get_extensions()
 
-# Setup phue Extension
-# Edit the IP adress in the phue-credentials file
-
-# Setup spotify Extension:
-#   Please refer to
-#   https://github.com/spotipy-dev/spotipy/blob/master/TUTORIAL.md
-#   Edit the clientID and clientSecret in the spotify credentials file
+# Managers
+managers.get_managers()

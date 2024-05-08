@@ -1,4 +1,5 @@
 import datetime as dt
+import time
 from utils.decorators import *
 import utils.dt_formatter as fm
 from utils.objects.extension import Extension
@@ -9,7 +10,6 @@ import extensions.google.google_init as g_init
 
 class GoogleCalendar(Extension):
     def __init__(self):
-
         self.credentials = g_init.init_google_api()
 
         try: 
@@ -17,6 +17,9 @@ class GoogleCalendar(Extension):
         except HttpError as error:
             self.service = None
             print(f"An error occured: {error}")
+        
+        self.data = {}
+        self.last_call_timestamp = 0
 
     @include_get
     def get_calendars(self):
@@ -33,12 +36,18 @@ class GoogleCalendar(Extension):
             calendars.append(calendar)
 
         return calendars
+    
+    def get_calendar_names(self):
+        return [calendar["summary"] for calendar in self.get_calendars()]
 
     @include_get
-    def get_todays_agenda(self, calendars:str="primary"):
+    def get_todays_agenda_request(self, calendars:str="primary"):
         timeMin, timeMax = fm.min_max_of_day()
-        events_today = self.get_events_request(calendars, timeMin, timeMax)
-        return events_today
+        return self.get_events_request(calendars, timeMin, timeMax)
+    
+    def get_todays_agenda(self, calendars:list):
+        timeMin, timeMax = fm.min_max_of_day()
+        return self.get_events(calendars, timeMin, timeMax)
         
     @include_get
     def get_events_request(self, calendars:str="primary", timeMin=None, timeMax = None):
@@ -100,4 +109,10 @@ class GoogleCalendar(Extension):
 
     @include_get
     def get_data(self):
-        return {}
+
+        time_diff = int(time.time()) - self.last_call_timestamp
+        if time_diff > 60: 
+            self.data = self.get_todays_agenda(self.get_calendar_names())
+            self.last_call_timestamp = time.time()
+
+        return self.data

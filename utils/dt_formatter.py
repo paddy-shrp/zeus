@@ -13,7 +13,6 @@ def min_max_of_day(timestamp:dt.datetime = None):
     if timestamp == None: timestamp = dt.datetime.now()
     timeMin = dt.datetime.combine(timestamp, dt.time.min).astimezone(get_timezone()).isoformat()
     timeMax = dt.datetime.combine(timestamp, dt.time.max).astimezone(get_timezone()).isoformat()
-    print(timeMax)
     return (timeMin, timeMax)
 
 def format_to_localized_iso(datetime:str):

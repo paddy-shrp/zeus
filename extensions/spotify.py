@@ -144,7 +144,15 @@ class Spotify(Extension):
         
     @include_get
     def get_data(self):
+        current_playback = self.get_current_playback()
         data = {}
+        if current_playback == 500: return data
+        
+        data["device"] = current_playback["device"]
+        data["id"] = current_playback["item"]["id"]
+        data["name"] = current_playback["item"]["name"]
+        data["type"] = current_playback["item"]["type"]
+        data["context"] = current_playback["context"]
         return data
     
     def is_spotify_link(self, value:str):

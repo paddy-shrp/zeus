@@ -10,11 +10,12 @@ import tinytuya as tuya
 class Tuya(Extension):
     def __init__(self):
         devices = self.scanDevices()
-        self.deviceList = []
+        self.deviceList = list[tuya.Device]()
         for device in devices:
             _device = tuya.Device(
                 device["id"], device["ip"], device["key"])
             _device.set_version(3.3)
+            _device.status()
             _device.set_socketPersistent(True)
             self.deviceList.append(_device)
 
@@ -27,12 +28,10 @@ class Tuya(Extension):
 
     @include_put
     def set_light_state(self, ids, on: bool):
-        if isinstance(ids, int):
+        if isinstance(ids, int): ids = [ids]
+    
+        for id in ids:
             Thread(target=self.deviceList[id].set_value, args=(1, on,)).start()
-        else:
-            for id in ids:
-                Thread(target=self.deviceList[id].set_value, args=(
-                    1, on,)).start()
 
     @include_put
     def on(self, ids):
@@ -60,4 +59,6 @@ class Tuya(Extension):
     @include_get
     def get_data(self):
         data = {}
+        for device in self.deviceList:
+            data[device.address] = device.status()
         return data
