@@ -1,11 +1,9 @@
 import os
-from os.path import exists, abspath, dirname
+from os.path import exists
 
-import utils.settings as settings
-import utils.credentials as credentials
-import utils.paths as paths
+from zeus_core.utils import settings, credentials, paths
 
-import modules
+import zeus_core.modules as modules
 
 # Resources
 if not exists(paths.get_resources_path()):

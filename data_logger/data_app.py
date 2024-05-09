@@ -2,7 +2,7 @@ import logging
 import time
 
 import data_logger as dl
-import zeus_core.utils.paths as paths
+from zeus_core.utils import paths
 
 logging.basicConfig(filename=paths.get_logs_path("data_app.log"), encoding="utf-8", level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 

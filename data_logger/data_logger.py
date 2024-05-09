@@ -6,8 +6,8 @@ from pymongo.server_api import ServerApi
 from pymongo.errors import DuplicateKeyError
 import logging
 
-import zeus_core.utils.settings as settings
-import zeus_core.modules as modules
+from zeus_core.utils import settings
+from zeus_core import modules
 
 modules = modules.get_modules()
 

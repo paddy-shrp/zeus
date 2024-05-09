@@ -1,11 +1,10 @@
 from time import sleep
 from threading import Thread
 
-
 from utils.decorators import *
 from utils.objects.module import Module
 
-import morseCode
+from modules.managers.morse import morseCode
 import modules
 
 # Intervals
