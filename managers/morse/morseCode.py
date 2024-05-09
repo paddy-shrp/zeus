@@ -1,7 +1,7 @@
-from utils.getters import get_dir_path
+from utils.getters import get_path
 import json
 
-morseFile = open(get_dir_path(__file__) + "morse.json")
+morseFile = open(get_path(__file__) + "morse.json")
 morseTable = json.load(morseFile)
 
 morseFile.close()

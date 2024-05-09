@@ -10,10 +10,6 @@ __pycache__/
 .DS_Store
 
 # Other files that pop up 
-logs
-settings
-credentials
-extensions/private
-extensions/tests
+resources
+private
 tests
-controller

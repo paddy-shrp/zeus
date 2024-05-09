@@ -1,8 +1,9 @@
 import os
 from os.path import exists, abspath, dirname
 import json
+import utils.getters as getters
 
-DIR_PATH = dirname(dirname(abspath(__file__))) + "resources/credentials/"
+DIR_PATH = getters.get_credentials_path()
 
 def init_credentials():
     if not exists(DIR_PATH):

@@ -1,12 +1,13 @@
 import os
 from os.path import exists, abspath, dirname
 import json
+import utils.getters as getters
 
-DIR_PATH = dirname(dirname(abspath(__file__))) + "resources/settings/"
+DIR_PATH = getters.get_settings_path()
 
-MAIN_SETTINGS_PATH = f"{DIR_PATH}main.json"
-EXTENSION_SETTINGS_PATH = f"{DIR_PATH}extensions.json"
-MANAGER_SETTINGS_PATH = f"{DIR_PATH}managers.json"
+MAIN_SETTINGS_PATH = getters.get_settings_path("main.json")
+EXTENSION_SETTINGS_PATH = getters.get_settings_path("extensions.json")
+MANAGER_SETTINGS_PATH = getters.get_settings_path("managers.json")
 
 def init_settings():
     if not exists(DIR_PATH):
@@ -15,7 +16,7 @@ def init_settings():
         settings = { 
             "timezone": "Europe/Berlin",
             "data_logger": {
-                "uri": "mongodb+srv://admin:IVctyiN3Tj3UJBYA@zeus.mmy6kbo.mongodb.net/?retryWrites=true&w=majority&appName=Zeus",
+                "uri": "",
             },
             "allowed_origins": [
                 "http://localhost",

@@ -3,6 +3,7 @@ import time
 from utils.decorators import *
 import utils.dt_formatter as fm
 from utils.objects.extension import Extension
+import logging
 
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
@@ -11,12 +12,8 @@ import extensions.google.google_init as g_init
 class GoogleCalendar(Extension):
     def __init__(self):
         self.credentials = g_init.init_google_api()
-
-        try: 
-            self.service = build("calendar", "v3", credentials=self.credentials)
-        except HttpError as error:
-            self.service = None
-            print(f"An error occured: {error}")
+ 
+        self.service = build("calendar", "v3", credentials=self.credentials)
         
         self.data = {}
         self.last_call_timestamp = 0

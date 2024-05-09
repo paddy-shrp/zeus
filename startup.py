@@ -3,19 +3,18 @@ from os.path import exists, abspath, dirname
 
 import utils.settings as settings
 import utils.credentials as credentials
+import utils.getters as getters
 
 import extensions
 import managers
 
 # Resources
-RESOURCE_PATH = dirname(abspath(__file__)) + "/resources"
-if not exists(RESOURCE_PATH):
-        os.mkdir(RESOURCE_PATH)
+if not exists(getters.get_resources_path()):
+        os.mkdir(getters.get_resources_path())
 
 # Logging
-LOG_PATH = dirname(abspath(__file__)) + "resources/logs"
-if not exists(LOG_PATH):
-        os.mkdir(LOG_PATH)
+if not exists(getters.get_logs_path()):
+        os.mkdir(getters.get_logs_path())
 
 # Credentials
 credentials.init_credentials()

@@ -2,8 +2,12 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import utils.settings as settings
 import utils.credentials as credentials
+import utils.getters as getters
 import api_routes
 import uvicorn
+import logging
+
+logging.basicConfig(filename=getters.get_logs_path("api.log"), encoding="utf-8", level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
 app = FastAPI()
 

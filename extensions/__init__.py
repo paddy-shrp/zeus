@@ -1,5 +1,6 @@
 import utils.getters as ugetters
 import utils.settings as settings
+import logging
 from importlib import import_module
 
 cached_extensions = {}
@@ -16,10 +17,14 @@ def init_extensions():
         try: 
             module = import_module(module_path)
             class_ = getattr(module, class_name)
-            cached_extensions[class_.get_extension_name()] = class_()
+            try:
+                cached_extensions[class_.get_extension_name()] = class_()
+            except Exception as e:
+                logging.exception(e)
+                logging.exception("Error initalizing Extension " + module_name + "!")
+
         except Exception as e:
-            print(e)
-            print("Extension " + module_name + " not found!")
+            logging.warning("Extension " + module_name + " not found!")
 
 def get_extensions(filter=[]):
     if cached_extensions == {}:

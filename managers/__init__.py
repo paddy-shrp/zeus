@@ -1,5 +1,6 @@
 import utils.getters as ugetters
 import utils.settings as settings
+import logging
 from importlib import import_module
 
 cached_managers = {}
@@ -16,10 +17,14 @@ def init_managers():
         try: 
             module = import_module(module_path)
             class_ = getattr(module, class_name)
-            cached_managers[class_.get_manager_name()] = class_()
+            try:
+                cached_managers[class_.get_manager_name()] = class_()
+            except Exception as e:
+                logging.exception(e)
+                logging.exception("Error initalizing Manager " + module_name + "!")
+        
         except Exception as e:
-            print(e)
-            print("Manager " + module_name + " not found!")
+            logging.warning("Manager " + module_name + " not found!")
 
 def get_managers(filter=[]):
     if cached_managers == {}:
