@@ -14,7 +14,6 @@ Currently configured for:
 - Spotify API
 - OpenWeatherMap API
 - Philips Hue Devices
-- Tuya Devices
 
 ## Structure
 
