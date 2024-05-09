@@ -4,6 +4,7 @@ import utils.dt_formatter as df
 from threading import Thread
 from pymongo import MongoClient
 from pymongo.errors import DuplicateKeyError
+import logging
 
 import extensions
 import managers
@@ -17,15 +18,21 @@ client = MongoClient(uri)
     
 try:
     client.admin.command('ping')
-    print("Pinged your deployment. You successfully connected to MongoDB!")
+    logging.info("Pinged your deployment. You successfully connected to MongoDB!")
 except Exception as e:
-    print(e)
+    logging.exception(e)
 
 def log_extension(name, ext):
-    add_point("extensions", name, ext.get_data())
+    try: 
+        add_point("extensions", name, ext.get_data())
+    except:
+        pass
 
 def log_manager(name, mg):
-    add_point("managers", name, mg.get_data())
+    try:
+        add_point("managers", name, mg.get_data())
+    except:
+        pass
 
 def log_data():
     threads = []
@@ -37,6 +44,8 @@ def log_data():
 
     for thread in threads:
         thread.join()
+    
+    logging.info("All data has been logged!")
 
 def get_extension_collection(ext_name):
     return client.get_database("extensions").get_collection(ext_name)
