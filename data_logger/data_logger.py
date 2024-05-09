@@ -2,7 +2,8 @@ import time
 import utils.settings as settings
 import utils.dt_formatter as df
 from threading import Thread
-from pymongo import MongoClient
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
 from pymongo.errors import DuplicateKeyError
 import logging
 
@@ -14,8 +15,12 @@ mgs = managers.get_managers()
 
 set = settings.get_settings()["data_logger"]
 uri = set["uri"].replace("<password>", set["password"])
-client = MongoClient(uri)
+client = MongoClient(uri, server_api=ServerApi('1'))
     
+# Log last point addons or geht last point addons
+# Check for extension data reference
+# Either only on change or on a frequent basis => last_call_timer
+
 try:
     client.admin.command('ping')
     logging.info("Pinged your deployment. You successfully connected to MongoDB!")

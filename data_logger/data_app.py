@@ -13,7 +13,7 @@ def run_app():
     try:
         while True:
             dl.log_data()
-            time.sleep(5)
+            time.sleep(15)
     except KeyboardInterrupt:
         pass
     logging.info("Data Logger has been stopped")

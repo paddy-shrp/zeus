@@ -13,7 +13,7 @@ def init_managers():
 
     cached_managers = {}
     for module_name, class_name in include_managers.items():
-        module_path = base_path + module_name + "." + module_name
+        module_path = base_path + module_name
         try: 
             module = import_module(module_path)
             class_ = getattr(module, class_name)
