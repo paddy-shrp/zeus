@@ -2,13 +2,13 @@ from random import randint
 from threading import Thread
 from time import sleep, time
 from utils.decorators import *
-from utils.objects.extension import Extension
+from utils.objects.module import Module
 from extensions.phue_v2.Bridge import Bridge
 
-class PHue(Extension):
+class PHue(Module):
     def __init__(self, host=""):
         default_settings = {"IP": host}
-        settings = self.get_extension_settings(default_settings)
+        settings = self.get_module_settings(default_settings)
         self.bridge = Bridge(settings["IP"])
 
     def set_light_state(self, ids, on = None, bri = None, color = None, transitiontime = None):

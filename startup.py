@@ -3,18 +3,17 @@ from os.path import exists, abspath, dirname
 
 import utils.settings as settings
 import utils.credentials as credentials
-import utils.getters as getters
+import utils.paths as paths
 
-import extensions
-import managers
+import modules
 
 # Resources
-if not exists(getters.get_resources_path()):
-        os.mkdir(getters.get_resources_path())
+if not exists(paths.get_resources_path()):
+        os.mkdir(paths.get_resources_path())
 
 # Logging
-if not exists(getters.get_logs_path()):
-        os.mkdir(getters.get_logs_path())
+if not exists(paths.get_logs_path()):
+        os.mkdir(paths.get_logs_path())
 
 # Credentials
 credentials.init_credentials()
@@ -28,8 +27,5 @@ credentials.init_credentials()
 # Settings
 settings.init_settings()
 
-# Extensions
-extensions.get_extensions()
-
-# Managers
-managers.get_managers()
+# Modules
+modules.get_modules()

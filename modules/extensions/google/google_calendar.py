@@ -2,14 +2,14 @@ import datetime as dt
 import time
 from utils.decorators import *
 import utils.dt_formatter as fm
-from utils.objects.extension import Extension
+from utils.objects.module import Module
 import logging
 
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 import extensions.google.google_init as g_init
 
-class GoogleCalendar(Extension):
+class GoogleCalendar(Module):
     def __init__(self):
         self.credentials = g_init.init_google_api()
  

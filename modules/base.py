@@ -1,11 +1,11 @@
 from utils.decorators import *
-from utils.objects.extension import Extension
+from utils.objects.module import Module
 
-class Base(Extension):
+class Base(Module):
 
     def __init__(self):
         default_settings = {}
-        settings = self.get_extension_settings(default_settings)
+        settings = self.get_module_settings(default_settings)
         
     @include_get
     def get_data(self):

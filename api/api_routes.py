@@ -1,11 +1,7 @@
 import inspect
-import extensions
-import managers
+import modules
 
-exts = extensions.get_extensions()
-mgs = managers.get_managers()
-
-def generate_routes(app, prefix, ext_name, module):
+def generate_module_routes(app, prefix, ext_name, module):
     for name, method in inspect.getmembers(module, inspect.ismethod):
         if name == "__init__": continue
         if name == "include": continue
@@ -19,10 +15,6 @@ def generate_routes(app, prefix, ext_name, module):
             tag = "data"
         app.add_api_route(path, method, tags=[tag], methods=[method.request_type])
 
-def generate_ext_mg_routes(app):
-    for name, ext in exts.items():
-        generate_routes(app, "extensions", name, ext)
-
-    for name, mg in mgs.items():
-        generate_routes(app, "managers", name, mg)
-
+def generate_modules_routes(app):
+    for module_name, module in modules.get_modules().items():
+        generate_module_routes(app, module[1], module_name, module[0])

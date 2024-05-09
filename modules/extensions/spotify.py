@@ -1,9 +1,9 @@
 import spotipy
 from spotipy import SpotifyOAuth
 from utils.decorators import *
-from utils.objects.extension import Extension
+from utils.objects.module import Module
 
-class Spotify(Extension):
+class Spotify(Module):
 
     def __init__(self, client_id="", client_secret=""):
         default_settings = {
@@ -12,7 +12,7 @@ class Spotify(Extension):
                 "redirectUri": "http://localhost:8080/callback",
                 "scopes": "streaming user-read-playback-state user-modify-playback-state user-read-currently-playing playlist-read-private"
                 }
-        settings = self.get_extension_settings(default_settings)
+        settings = self.get_module_settings(default_settings)
         self.client = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=settings["clientID"],
                                                                 client_secret=settings["clientSecret"],
                                                                 redirect_uri=settings["redirectUri"],

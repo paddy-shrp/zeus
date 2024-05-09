@@ -1,8 +1,10 @@
 from time import sleep
 from threading import Thread
 from utils.decorators import *
-from utils.objects.manager import Manager
+from utils.objects.module import Module
 from managers.morse import morseCode as morse
+
+import modules
 
 # Intervals
 SHORT_DURATION = 0.5
@@ -11,18 +13,15 @@ SHORT_PAUSE_DURATION = 0.75
 LONG_PAUSE_DURATION = 1.5
 CYCLE_PAUSE_DURATION = 10
 
-import extensions as exts
-
 phueLights = {9, 10}
 tuyaLights = {1}
 
-class Morse(Manager):
+class Morse(Module):
 
     def __init__(self):
-        extensions = exts.get_extensions()
-        self.spotifyExt = extensions["spotify"]
-        self.phueExt = extensions["phue"]
-        self.tuyaExt = extensions["tuya"]
+        self.spotifyExt = modules.get_module("spotify")
+        self.phueExt = modules.get_module("phue")
+        self.tuyaExt = modules.get_module("tuya")
 
     def init_lights(self):
         self.phueExt.set_to_base_color(phueLights, 0)

@@ -4,20 +4,20 @@ import ast
 from time import sleep
 from os.path import exists
 
-from utils.objects.manager import Manager
+from utils.objects.module import Module
 from utils.decorators import *
-import extensions as exts
+import modules
 
 # Make dynamic
 PHUE_LIGHT_IDS = {3, 4, 5, 6, 8}
 TUYA_LIGHT_IDS = {0, 1, 2}
 
-class Show(Manager):
+class Show(Module):
     def __init__(self):
-        extensions = exts.get_extensions()
-        self.spotifyExt = extensions["spotify"]
-        self.phueExt = extensions["phue"]
-        self.tuyaExt = extensions["tuya"]
+        mds = modules.get_modules()
+        self.spotifyExt = modules.get_module("spotify")
+        self.phueExt = modules.get_module("phue")
+        self.tuyaExt = modules.get_module("tuya")
         self.phue_light_ids = PHUE_LIGHT_IDS
         self.tuya_light_ids = TUYA_LIGHT_IDS
 

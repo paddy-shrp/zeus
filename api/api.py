@@ -2,19 +2,19 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import utils.settings as settings
 import utils.credentials as credentials
-import utils.getters as getters
+import utils.paths as paths
 import api_routes
 import uvicorn
 import logging
 
-logging.basicConfig(filename=getters.get_logs_path("api.log"), encoding="utf-8", level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+logging.basicConfig(filename=paths.get_logs_path("api.log"), encoding="utf-8", level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
 app = FastAPI()
 
 # Add CORS middleware to the FastAPI app
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.get_settings()["allowed_origins"],
+    allow_origins=settings.get_main_settings()["allowed_origins"],
     allow_credentials=True,
     allow_methods=["*"],  # Allow all methods
     allow_headers=["*"],  # Allow all headers
@@ -28,7 +28,7 @@ def read_root():
 def get_routes(base):
     return [route.path for route in app.routes if route.path.startswith("/" + base)]
 
-api_routes.generate_ext_mg_routes(app)
+api_routes.generate_modules_routes(app)
 
 if __name__ == "__main__":
     # ssl_crt = credentials.get_path("api.crt")

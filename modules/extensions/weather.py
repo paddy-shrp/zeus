@@ -1,5 +1,5 @@
 from utils.decorators import *
-from utils.objects.extension import Extension
+from utils.objects.module import Module
 import requests
 import time
 import pandas as pd
@@ -7,11 +7,11 @@ import pandas as pd
 FORECAST_URL = "https://api.openweathermap.org/data/2.5/forecast"
 CURRENT_URL = "https://api.openweathermap.org/data/2.5/weather"
 
-class Weather(Extension):
+class Weather(Module):
 
     def __init__(self, apiKey="", lat="", lon="", units=""):
         default_settings = {"apiKey": apiKey, "lat": lat, "lon": lon, "units": units}
-        credentials = self.get_extension_settings(default_settings)
+        credentials = self.get_module_settings(default_settings)
         self.apiKey = credentials["apiKey"]
         self.lat = credentials["lat"]
         self.lon = credentials["lon"]

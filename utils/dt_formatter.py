@@ -4,7 +4,7 @@ import pandas as pd
 import utils.settings as settings
 
 def get_timezone():
-    return pytz.timezone(settings.get_settings()["timezone"])
+    return pytz.timezone(settings.get_main_settings()["timezone"])
 
 def now():
     return dt.datetime.now(get_timezone()).isoformat()
