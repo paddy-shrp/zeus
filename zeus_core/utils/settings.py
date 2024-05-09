@@ -26,8 +26,7 @@ def init_settings():
                 "spotify": "Spotify",
                 "weather": "Weather"
             },
-            "include_managers": {},
-            "include_private": {}
+            "include_managers": {}
         }
         
         with open(MAIN_SETTINGS_PATH, "w") as file:

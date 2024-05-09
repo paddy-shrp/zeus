@@ -1,9 +1,11 @@
 from random import randint
 from threading import Thread
 from time import sleep, time
+
 from utils.decorators import *
 from utils.objects.module import Module
-from extensions.phue_v2.Bridge import Bridge
+
+from modules.extensions.phue_v2.Bridge import Bridge
 
 class PHue(Module):
     def __init__(self, host=""):

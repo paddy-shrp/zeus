@@ -6,6 +6,7 @@ from os.path import exists
 
 from utils.objects.module import Module
 from utils.decorators import *
+
 import modules
 
 # Make dynamic
@@ -14,7 +15,6 @@ TUYA_LIGHT_IDS = {0, 1, 2}
 
 class Show(Module):
     def __init__(self):
-        mds = modules.get_modules()
         self.spotifyExt = modules.get_module("spotify")
         self.phueExt = modules.get_module("phue")
         self.tuyaExt = modules.get_module("tuya")

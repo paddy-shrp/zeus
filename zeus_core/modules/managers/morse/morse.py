@@ -1,9 +1,11 @@
 from time import sleep
 from threading import Thread
+
+
 from utils.decorators import *
 from utils.objects.module import Module
-from managers.morse import morseCode as morse
 
+import morseCode
 import modules
 
 # Intervals
@@ -48,7 +50,7 @@ class Morse(Module):
 
 
     def show_morse(self, msg: str, cycles=1):
-        morseString = morse.parse_string_to_morse(msg)
+        morseString = morseCode.parse_string_to_morse(msg)
         totalDuration = self.calculate_duration(morseString) * cycles
         print(f"Total Duration (with {cycles} Cycles): {totalDuration}s")
         passedDuration = 0

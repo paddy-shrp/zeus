@@ -1,8 +1,7 @@
+import requests
+
 from utils.decorators import *
 from utils.objects.module import Module
-import requests
-import time
-import pandas as pd
 
 FORECAST_URL = "https://api.openweathermap.org/data/2.5/forecast"
 CURRENT_URL = "https://api.openweathermap.org/data/2.5/weather"

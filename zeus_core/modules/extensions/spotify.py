@@ -1,5 +1,6 @@
 import spotipy
 from spotipy import SpotifyOAuth
+
 from utils.decorators import *
 from utils.objects.module import Module
 

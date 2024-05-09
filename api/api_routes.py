@@ -1,5 +1,5 @@
 import inspect
-import modules
+import zeus_core.modules as modules
 
 def generate_module_routes(app, prefix, ext_name, module):
     for name, method in inspect.getmembers(module, inspect.ismethod):

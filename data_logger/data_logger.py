@@ -1,12 +1,13 @@
 import time
-import utils.settings as settings
+
 from threading import Thread
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 from pymongo.errors import DuplicateKeyError
 import logging
 
-import modules
+import zeus_core.utils.settings as settings
+import zeus_core.modules as modules
 
 modules = modules.get_modules()
 

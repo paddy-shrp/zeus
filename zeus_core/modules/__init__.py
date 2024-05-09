@@ -1,6 +1,7 @@
-import utils.settings as settings
 import logging
 from importlib import import_module
+
+import utils.settings as settings
 
 cached_modules = {}
 
@@ -11,8 +12,6 @@ def init_modules():
     import_modules("extensions", include_extensions.items())
     include_managers = settings.get_main_settings().get("include_managers", {})
     import_modules("managers", include_managers.items())
-    include_private = settings.get_main_settings().get("include_private", {})
-    import_modules("private", include_private.items())
 
 def import_modules(import_path, items):
     global cached_modules
@@ -32,6 +31,7 @@ def import_modules(import_path, items):
                 logging.exception("Error initalizing Module " + module_name)
         
         except Exception as e:
+            logging.exception(e)
             logging.warning("Module import " + module_name + " not found")
 
 def get_module(module_name):

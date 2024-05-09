@@ -1,10 +1,11 @@
+from os.path import exists
+
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
-from utils.settings import get_extension_settings
-import utils.credentials as cred
 
-from os.path import exists
+from utils.settings import get_module_settings
+import utils.credentials as cred
 
 GOOGLE_EXT_NAME = "google_apis"
 TOKEN_PATH = "google-token.json"
@@ -33,7 +34,7 @@ def init_google_api():
                     "redirect_uris": ["http://localhost"]
                 }
             }
-            settings = get_extension_settings(GOOGLE_EXT_NAME, default_settings)
+            settings = get_module_settings(GOOGLE_EXT_NAME, default_settings)
             flow = InstalledAppFlow.from_client_config(settings, SCOPES)
             credentials = flow.run_local_server(port=0)
         

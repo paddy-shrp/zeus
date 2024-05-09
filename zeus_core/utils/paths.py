@@ -4,7 +4,7 @@ def get_path(file):
     return dirname(abspath(file)) + "/"
 
 def get_main_path():
-    return dirname(dirname(abspath(__file__)))
+    return dirname(dirname(dirname(abspath(__file__))))
 
 def get_resources_path():
     return join(get_main_path(), "resources")
