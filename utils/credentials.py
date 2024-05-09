@@ -2,7 +2,7 @@ import os
 from os.path import exists, abspath, dirname
 import json
 
-DIR_PATH = dirname(dirname(abspath(__file__))) + "/credentials/"
+DIR_PATH = dirname(dirname(abspath(__file__))) + "resources/credentials/"
 
 def init_credentials():
     if not exists(DIR_PATH):

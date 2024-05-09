@@ -7,8 +7,13 @@ import utils.credentials as credentials
 import extensions
 import managers
 
+# Resources
+RESOURCE_PATH = dirname(abspath(__file__)) + "/resources"
+if not exists(RESOURCE_PATH):
+        os.mkdir(RESOURCE_PATH)
+
 # Logging
-LOG_PATH = dirname(abspath(__file__)) + "/logs"
+LOG_PATH = dirname(abspath(__file__)) + "resources/logs"
 if not exists(LOG_PATH):
         os.mkdir(LOG_PATH)
 
