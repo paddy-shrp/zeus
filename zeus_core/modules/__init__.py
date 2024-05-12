@@ -1,25 +1,27 @@
 import logging
 from importlib import import_module
+import inspect
 
 import utils.settings as settings
 
 cached_modules = {}
 
 def init_modules():
+    import_modules("extensions", settings.get_main_settings().get("include_extensions", []))
+    import_modules("managers", settings.get_main_settings().get("include_managers", []))
+
+def import_modules(import_path, module_names):
     global cached_modules
 
-    include_extensions = settings.get_main_settings().get("include_extensions", {})
-    import_modules("extensions", include_extensions.items())
-    include_managers = settings.get_main_settings().get("include_managers", {})
-    import_modules("managers", include_managers.items())
-
-def import_modules(import_path, items):
-    global cached_modules
-
-    for module_name, class_name in items:
+    for module_name in module_names:
         module_path = "modules." + import_path + "." + module_name
         try: 
             module = import_module(module_path)
+            class_name = ""
+            for name, obj in inspect.getmembers(module, inspect.isclass):
+                if module_path == obj.__module__: 
+                    class_name = name
+                    break
             class_ = getattr(module, class_name)
             try:
                 if class_.get_module_name() in cached_modules:

@@ -22,11 +22,11 @@ def init_settings():
                 "http://127.0.0.1",
                 "http://192.168.178.1"
             ],
-            "include_extensions": {
-                "spotify": "Spotify",
-                "weather": "Weather"
-            },
-            "include_managers": {}
+            "include_extensions": [
+                "spotify",
+                "weather"
+            ],
+            "include_managers": []
         }
         
         with open(MAIN_SETTINGS_PATH, "w") as file:

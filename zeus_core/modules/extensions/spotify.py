@@ -1,8 +1,9 @@
 import spotipy
-from spotipy import SpotifyOAuth
+from spotipy import SpotifyOAuth, CacheFileHandler, CacheHandler
 
 from utils.decorators import *
 from utils.objects.module import Module
+from utils import credentials
 
 class Spotify(Module):
 
@@ -18,6 +19,7 @@ class Spotify(Module):
                                                                 client_secret=settings["clientSecret"],
                                                                 redirect_uri=settings["redirectUri"],
                                                                 scope=settings["scopes"]))
+        
 
     # Return Codes need to be adjusted
 
