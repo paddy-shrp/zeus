@@ -57,8 +57,8 @@ class MongoDB():
                 difference = time.time() - self.get_last_data_log_timestamp(type, module_name)
                 if difference >= frequency:
                     self.add_point(type, module_name, data)
-        except Exception as e:
-            print(e)
+        except:
+            pass
 
     @include_post
     def log_modules(self):
@@ -68,27 +68,24 @@ class MongoDB():
 
         for thread in threads:
             thread.join()
-    
-        logging.info("All data has been logged!")
 
     def get_last_data_log(self, db_name, cl_name):
-        try:
-            cursor = self.get_collection(db_name, cl_name).find().limit(1)
-            return list(cursor)[0]
-        except:
-            return {
+        data = self.get_collection(db_name, cl_name).find_one(sort=[("timestamp", -1)])
+        if data == None:
+            data = {
                 "timestamp": 0,
                 "value": {}
             }
+        return data
+
+    def get_last_data_log_timestamp(self, db_name, cl_name):
+        return self.get_last_data_log(db_name, cl_name)["timestamp"]
 
     def get_last_data_log_value(self, db_name, cl_name):
         return self.get_last_data_log(db_name, cl_name)["value"]
     
-    def get_last_data_log_timestamp(self, db_name, cl_name):
-        return self.get_last_data_log(db_name, cl_name)["timestamp"]
-
     def data_has_changed(self, type, module_name, data):
-        return not (self.get_last_data_log(type, module_name) == data)
+        return not (self.get_last_data_log_value(type, module_name) == data)
 
     def add_point(self, db_name, cl_name, value):
         if value == {}: return
@@ -99,3 +96,8 @@ class MongoDB():
             self.get_collection(db_name, cl_name).insert_one(data)
         except DuplicateKeyError:
             pass
+
+# set = settings.get_main_settings()["data_logger"]
+# uri = set["uri"].replace("<password>", set["password"])
+# mdb = MongoDB(uri)
+# print(mdb.get_last_data_log_timestamp("extensions", "weather"))
