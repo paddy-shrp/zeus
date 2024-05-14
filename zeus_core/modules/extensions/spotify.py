@@ -6,6 +6,7 @@ from utils.objects.module import Module
 from utils import credentials
 
 class Spotify(Module):
+    logging_frequency = 0
 
     def __init__(self, client_id="", client_secret=""):
         default_settings = {

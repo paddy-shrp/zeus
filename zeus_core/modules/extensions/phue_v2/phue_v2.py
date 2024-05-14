@@ -8,6 +8,8 @@ from utils.objects.module import Module
 from modules.extensions.phue_v2.Bridge import Bridge
 
 class PHue(Module):
+    logging_frequency = 0
+
     def __init__(self, host=""):
         default_settings = {"IP": host}
         settings = self.get_module_settings(default_settings)

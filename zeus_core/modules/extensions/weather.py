@@ -7,6 +7,7 @@ FORECAST_URL = "https://api.openweathermap.org/data/2.5/forecast"
 CURRENT_URL = "https://api.openweathermap.org/data/2.5/weather"
 
 class Weather(Module):
+    logging_frequency = 15
 
     def __init__(self, apiKey="", lat="", lon="", units=""):
         default_settings = {"apiKey": apiKey, "lat": lat, "lon": lon, "units": units}

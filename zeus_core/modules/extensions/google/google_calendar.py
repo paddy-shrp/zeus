@@ -10,6 +10,8 @@ from utils.objects.module import Module
 import modules.extensions.google.google_init as g_init
 
 class GoogleCalendar(Module):
+    logging_frequency = 10800 # Every 3 hours
+
     def __init__(self):
         self.credentials = g_init.init_google_api()
  
