@@ -12,9 +12,13 @@ if not exists(paths.get_resources_path()):
 # Logging
 if not exists(paths.get_logs_path()):
         os.mkdir(paths.get_logs_path())
-
 # Credentials
 credentials.init_credentials()
+# Settings
+settings.init_settings()
+
+# Modules
+modules.get_modules()
 
 # if not credentials.credentials_exist("api.key"):
 #     os.system("openssl genrsa -out api.key 2048")
@@ -22,8 +26,4 @@ credentials.init_credentials()
 #     shutil.move("./api.key", credentials.get_path("api.key"))
 #     shutil.move("./api.crt", credentials.get_path("api.crt"))
 
-# Settings
-settings.init_settings()
 
-# Modules
-modules.get_modules()

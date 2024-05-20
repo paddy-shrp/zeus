@@ -36,6 +36,9 @@ class MongoDB():
         if key not in self.cached_collections:
             self.cached_collections[key] = self.client.get_database(db_name).get_collection(cl_name)
         return self.cached_collections[key]
+    
+    def get_collections(self):
+        return self.cached_collections
 
     @include_post
     def log_module_request(self, md_name):
@@ -96,6 +99,22 @@ class MongoDB():
             self.get_collection(db_name, cl_name).insert_one(data)
         except DuplicateKeyError:
             pass
+
+    def import_points(self, db_name, cl_name, points, timestamp_key="timestamp"):
+        collection = self.get_collection(db_name, cl_name)
+        for point in points:
+            data = {}
+            if timestamp_key in point:
+                data["timestamp"] = point[timestamp_key]
+                point.pop(timestamp_key)
+            else:
+                data["timestamp"] = int(time.time())
+
+            data["value"] = point
+            try:
+                collection.insert_one(data)
+            except DuplicateKeyError:
+                pass
 
 # set = settings.get_main_settings()["data_logger"]
 # uri = set["uri"].replace("<password>", set["password"])

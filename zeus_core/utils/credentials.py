@@ -9,11 +9,13 @@ def init_credentials():
     if not exists(DIR_PATH):
         os.mkdir(DIR_PATH)
 
-def get_credentials_json(file_name):  
+def get_credentials_json(file_name, default_credentials={}):  
     path = get_path(file_name)
-    if not exists(path): init_credentials()
     if exists(path):
         return json.load(open(path))
+    else:
+        write_credentials_json(file_name, default_credentials)
+        return default_credentials
 
 def write_credentials_json(file_name, credentials):
     with open(get_path(file_name), "w") as file:

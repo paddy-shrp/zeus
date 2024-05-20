@@ -6,7 +6,7 @@ import logging
 import api_routes
 from zeus_core.utils import settings, paths
 
-logging.basicConfig(filename=paths.get_logs_path("api.log"), encoding="utf-8", level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+logging.basicConfig(filename=paths.get_logs_path("api_app.log"), encoding="utf-8", level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
 app = FastAPI()
 
@@ -27,17 +27,23 @@ def read_root():
 def get_routes(base):
     return [route.path for route in app.routes if route.path.startswith("/" + base)]
 
-api_routes.generate_modules_routes(app)
+server = []
 
-if __name__ == "__main__":
-    # ssl_crt = credentials.get_path("api.crt")
-    # ssl_key = credentials.get_path("api.key")
-    # config = uvicorn.Config(app, host="127.0.0.1", port=8000, ssl_certfile=ssl_crt, ssl_keyfile=ssl_key)
+def start_api_app():
+    global server
+
+    api_routes.generate_modules_routes(app)
     logging.info("API is now running")
     
     config = uvicorn.Config(app, host="127.0.0.1", port=8000)
     server = uvicorn.Server(config)
     server.run()
+
+if __name__ == "__main__":
+    # ssl_crt = credentials.get_path("api.crt")
+    # ssl_key = credentials.get_path("api.key")
+    # config = uvicorn.Config(app, host="127.0.0.1", port=8000, ssl_certfile=ssl_crt, ssl_keyfile=ssl_key)
+    start_api_app()
     
     
 
