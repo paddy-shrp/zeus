@@ -3,13 +3,14 @@ Description=ZEUS Hub for starting all apps
 After=network.target
 
 [Service]
-Environment="ZEUS_APPS_DIR=/path/to/working/directory"
+User=root
+Group=root
 
 # The command to execute
-ExecStart=$ZEUS_APPS_DIR/commands/startup.sh
+ExecStart=PATH/commands/startup.sh
 
 # Working directory
-WorkingDirectory=$ZEUS_APPS_DIR
+WorkingDirectory=PATH
 
 # ---- Do not touch ----
 
@@ -20,10 +21,6 @@ RestartSec=5s
 # Logging options
 StandardOutput=syslog
 StandardError=syslog
-
-# User and group to run the service as
-User=myuser
-Group=mygroup
 
 # Limits
 LimitNOFILE=1024

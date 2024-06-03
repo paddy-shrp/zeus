@@ -13,4 +13,4 @@ __pycache__/
 resources
 private
 tests
-zeus_apps/zeus_hub.service
+zeus_hub/zeus_hub.service

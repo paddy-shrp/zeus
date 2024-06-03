@@ -1,1 +1,0 @@
-sudo cp PATH /etc/systemd/system/zeus_hub.service
