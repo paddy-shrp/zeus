@@ -9,9 +9,6 @@ Group=root
 # The command to execute
 ExecStart=PATH/commands/startup.sh
 
-# Working directory
-WorkingDirectory=PATH
-
 # ---- Do not touch ----
 
 # Restart options

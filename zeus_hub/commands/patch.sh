@@ -1,1 +1,1 @@
-sudo systemctl restart tapit
+sudo systemctl restart zeus_hub
