@@ -4,8 +4,7 @@ import time
 
 from mongo_db import MongoDB
 
-from zeus_core.utils import settings
-from zeus_core.utils import paths
+from zeus_core.utils import settings, paths
 
 logging.basicConfig(filename=paths.get_logs_path("data_app.log"), encoding="utf-8", level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 

@@ -10,7 +10,7 @@ activate_venv_command = f"source {ZEUS_REPO_DIR}/.venv/bin/activate"
 subprocess.run(activate_venv_command, shell=True, executable="/bin/bash")
 
 gunicorn_command = "gunicorn api_app:app --bind 127.0.0.1:8000 --workers 4 --worker-class uvicorn.workers.UvicornWorker &"
-subprocess.run(gunicorn_command, shell=True, cwd=f"{ZEUS_REPO_DIR}/api")
+subprocess.run(gunicorn_command, shell=True, cwd=f"{paths.get_dir_path(__file__)}api")
 
 data_app_command = f"{ZEUS_REPO_DIR}/.venv/bin/python {ZEUS_REPO_DIR}/data/data_app.py &"
 subprocess.run(data_app_command, shell=True)

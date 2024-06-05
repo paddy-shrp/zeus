@@ -9,8 +9,8 @@ from zeus_core.utils import credentials
 PID_FILE = "hub_pids.json"
 
 APPS_DICT = {
-    # "api": "api/api_app.py",
-    "data_logger": "data_logger/data_app.py"
+    "api": "api/api_app.py",
+    "data": "data/data_app.py"
 }
 
 DEFAULT_CREDENTIALS = {

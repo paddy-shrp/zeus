@@ -9,8 +9,7 @@ from pymongo.collection import Collection
 from pymongo.server_api import ServerApi
 from pymongo.errors import DuplicateKeyError
 
-from zeus_core import modules as mds
-from zeus_core.utils import settings
+from zeus_core import modules
 from zeus_core.utils.objects.module import Module 
 
 # Cache Collections
@@ -18,7 +17,7 @@ from zeus_core.utils.objects.module import Module
 class MongoDB():
 
     def __init__(self, uri):
-        self.modules = mds.get_modules()        
+        self.modules = modules.get_modules()        
         self.client = MongoClient(uri, server_api=ServerApi('1'))
 
         self.cached_collections = {}

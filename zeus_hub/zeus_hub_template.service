@@ -3,13 +3,11 @@ Description=ZEUS Hub for starting all apps
 After=network.target
 
 [Service]
-Environment="ZEUS_REPO_DIR=/your/zeus/repo/dir"
-
 User=root
 Group=root
 
 # The command to execute
-ExecStart=$ZEUS_REPO_DIR/zeus_hub/service_commands/startup.sh
+ExecStart=~/Documents/GitHub/zeus/zeus_hub/service_commands/startup.sh
 
 # ---- Do not touch ----
 

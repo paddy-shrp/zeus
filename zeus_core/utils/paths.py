@@ -1,6 +1,9 @@
 from os.path import join, abspath, dirname
     
 def get_path(file):
+    return abspath(file) + "/"
+
+def get_dir_path(file):
     return dirname(abspath(file)) + "/"
 
 def get_main_path(file_path=""):
