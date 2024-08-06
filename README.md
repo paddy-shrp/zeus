@@ -23,22 +23,25 @@ It focuses on rapid module development and seamless API integrations. An HTTP-AP
 ### File Structure
 
 ```
-zeus
-├── api/
-├── data_logger/
-├── ai/
+zeus/
 ├── zeus_core/
 │   ├── modules/
 │   │   ├── extensions/
-│   │   │   ├── example_extension_0/
-│   │   │   │   └── example_extension_0.py
-│   │   │   └── example_extension_1.py
-│   │   ├── managers/
-│   │   │   ├── example_manager/
-│   │   │   │   └── example_manager_0.py
-│   │   │   └── example_manager_1.py
-│   │   └── __init__.py
-│   └── utils/
-│       └── __init__.py
-└── startup.py
+│   │   │   ├── example_extension_0.py
+│   │   │   └── example_extension_1/
+│   │   │       └── example_extension_1_1.py
+│   │   └── managers/
+│   │       ├── example_manager_0.py
+│   │       └── example_manager_1/
+│   │           └── example_manager_1_1.py
+│   └── __init__.py
+├── zeus_hub/
+│   ├── apps/
+│   │   ├── api
+│   │   ├── data
+│   │   └── run.py
+│   └── service_commands
+└── zeus_server/
+    ├── commands
+    └── nginx
 ```
