@@ -18,7 +18,7 @@ It focuses on rapid module development and seamless API integrations. An HTTP-AP
 - Spotify API
 - OpenWeatherMap API
 - Philips Hue Devices
-- More to come as soon as the baseline is completely safe
+- ...
 
 ### File Structure
 
