@@ -30,10 +30,14 @@ zeus/
 │   │   │   ├── example_extension_0.py
 │   │   │   └── example_extension_1/
 │   │   │       └── example_extension_1_1.py
-│   │   └── managers/
-│   │       ├── example_manager_0.py
-│   │       └── example_manager_1/
-│   │           └── example_manager_1_1.py
+│   │   ├── managers/
+│   │   │   ├── example_manager_0.py
+│   │   │   └── example_manager_1/
+│   │   │       └── example_manager_1_1.py
+│   │   └── __init__.py
+│   ├── utils/
+│   │   ├── objects
+│   │   └── __init__.py
 │   └── __init__.py
 ├── zeus_hub/
 │   ├── apps/
