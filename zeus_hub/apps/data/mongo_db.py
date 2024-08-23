@@ -1,4 +1,4 @@
-from utils.decorators import *
+from zeus_core.utils.decorators import *
 
 from threading import Thread
 import time
