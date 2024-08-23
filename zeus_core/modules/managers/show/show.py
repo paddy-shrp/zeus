@@ -8,24 +8,24 @@ from utils.objects.module import Module
 from utils.decorators import *
 
 import modules
+from modules.extensions.spotify import Spotify
+from modules.extensions.phue_v2.phue_v2 import PHue
 
-# Make dynamic
 PHUE_LIGHT_IDS = {3, 4, 5, 6, 8}
-TUYA_LIGHT_IDS = {0, 1, 2}
 
 class Show(Module):
+    spotifyExt: Spotify
+    phueExt: PHue
+
     def __init__(self):
         self.spotifyExt = modules.get_module("spotify")
         self.phueExt = modules.get_module("phue")
-        self.tuyaExt = modules.get_module("tuya")
         self.phue_light_ids = PHUE_LIGHT_IDS
-        self.tuya_light_ids = TUYA_LIGHT_IDS
 
     def init_lights(self):
         self.phueExt.set_to_base_color(self.phue_light_ids, 0)
         self.phueExt.on(self.phue_light_ids)
         self.phueExt.temp_off(self.phue_light_ids)
-        self.tuyaExt.set_light_state(self.tuya_light_ids, on=False)
 
     # Converts the file into a readable command dictionary
     def read_file(self, path):

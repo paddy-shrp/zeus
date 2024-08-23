@@ -5,7 +5,10 @@ from utils.decorators import *
 from utils.objects.module import Module
 
 from modules.managers.morse import morseCode
+
 import modules
+from modules.extensions.spotify import Spotify
+from modules.extensions.phue_v2.phue_v2 import PHue
 
 # Intervals
 SHORT_DURATION = 0.5
@@ -15,28 +18,25 @@ LONG_PAUSE_DURATION = 1.5
 CYCLE_PAUSE_DURATION = 10
 
 phueLights = {9, 10}
-tuyaLights = {1}
 
 class Morse(Module):
+    spotifyExt: Spotify
+    phueExt: PHue
 
     def __init__(self):
         self.spotifyExt = modules.get_module("spotify")
         self.phueExt = modules.get_module("phue")
-        self.tuyaExt = modules.get_module("tuya")
 
     def init_lights(self):
         self.phueExt.set_to_base_color(phueLights, 0)
         self.phueExt.on(phueLights)
         self.phueExt.temp_off(phueLights)
-        self.tuyaExt.off(tuyaLights)
-
 
     def calculate_duration(self, msg: str):
         pauseDuration = msg.count(" ") * LONG_PAUSE_DURATION
         shortDuration = msg.count(".") * (SHORT_DURATION + SHORT_PAUSE_DURATION)
         longDuration = msg.count("-") * (LONG_DURATION + SHORT_PAUSE_DURATION)
         return pauseDuration + shortDuration + longDuration
-
 
     def print_progress_bar(self, iteration, total, prefix='', suffix='', decimals=0, length=50, fill='█', printEnd="\r"):
 
@@ -46,7 +46,6 @@ class Morse(Module):
         print(f'\r|{bar}| {percent}%', end=printEnd)
         if iteration == total:
             print()
-
 
     def show_morse(self, msg: str, cycles=1):
         morseString = morseCode.parse_string_to_morse(msg)
